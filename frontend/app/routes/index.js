@@ -33,6 +33,7 @@ export default Ember.Route.extend({
           requestor: event.fields.requestor,
           timestamp: event.fields.timestamp,
           userid: event.fields.userid,
+		  commstatus: event.fields.commstatus,
           img: 'img/event-icon.jpg',
           link: 'index'
         });
