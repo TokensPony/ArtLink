@@ -78,6 +78,7 @@ class Register(APIView):
 
         #especially before you pass them in here
         newuser = User.objects.create_user(email=email, username=username, password=password)
+        #Profile
         newprofile = Profile(user=newuser, gender=gender, age=age, educationlevel=educationlevel, city=city, state=state)
         newprofile.save()
 
