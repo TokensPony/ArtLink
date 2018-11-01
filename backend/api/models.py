@@ -19,6 +19,13 @@ class Event(models.Model):
 
     def __str__(self):
         return str(self.eventtype)
+        
+class Profile(models.Model):
+    commstatus = models.CharField(max_length=1000, blank=False)
+    description = models.CharField(max_length=1000, blank=False)
+    name = models.CharField(max_length=1000, blank=False)
+    def __str__(self):
+        return str(self.eventtype)
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('eventtype', 'timestamp')

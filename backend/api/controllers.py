@@ -124,13 +124,6 @@ class Events(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
-	
-    def get_object(self, pk):
-        try:
-            print 'Attempt Get ' + pk
-            return Event.objects.get(pk=pk)
-        except Event.DoesNotExist:
-            raise Http404
     
     def get(self, request, format=None):
         events = Event.objects.all()
@@ -171,11 +164,6 @@ class Events(APIView):
         print 'New Event Logged from: ' + requestor
         return Response({'success': True}, status=status.HTTP_200_OK)
     
-    def delete(self, request, pk, format=None):
-        snippet = self.get_object(pk)
-        #snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
-    
 class EventDetail(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
@@ -191,7 +179,62 @@ class EventDetail(APIView):
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
         snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)        
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
+#Profiles        
+class Profiles(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+    
+    def get(self, request, format=None):
+        profiles = Profile.objects.all()
+        json_data = serializers.serialize('json', profiles)
+        content = {'profiles': json_data}
+        return HttpResponse(json_data, content_type='json')
+
+    def post(self, request, *args, **kwargs):
+        print 'REQUEST DATA'
+        print str(request.data)
+
+        commstatus = request.data.get('commstatus')
+        description = request.data.get('description')
+        name = request.data.get('name')
+        
+        
+        newProfile = Profile(
+            commstatus=commstatus,
+            description = description,
+            name = name
+        )
+
+        try:
+            newProfile.clean_fields()
+        except ValidationError as e:
+            print e
+            return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+
+        newProfile.save()
+        print 'New Profile Logged from: ' + requestor
+        return Response({'success': True}, status=status.HTTP_200_OK)
+
+#ProfileDetail    
+class ProfileDetail(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+    
+    def get_object(self, pk):
+        try:
+            print 'Attempt Get ' + pk
+            return Profile.objects.get(pk=pk)
+        except Profile.DoesNotExist:
+            raise Http404
+            
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)                
 
 class ActivateIFTTT(APIView):
     permission_classes = (AllowAny,)
