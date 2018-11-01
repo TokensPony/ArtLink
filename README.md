@@ -36,6 +36,7 @@ Accounts can be deleted by admins, if needed.
 
 
 ## Installation
+NOTE: This app assumes you have python, docker, and django installed
 ```bash
 docker-build .
 docker-compose run django bash
@@ -44,11 +45,10 @@ python manage.py createsuperuser --username admin --email admin
 ```
 
 ## Getting Started
-To run my awesome app simply,
+To run my app,
 ```bash
 docker-compose up
 ```
-See in-app menus for help with using specific features.
 
 # License
 The MIT License (MIT)
