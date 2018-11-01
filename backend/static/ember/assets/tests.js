@@ -12,7 +12,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('controllers/application.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/application.js should pass ESLint\n\n32:11 - Unexpected console statement. (no-console)\n33:11 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'controllers/application.js should pass ESLint\n\n35:11 - Unexpected console statement. (no-console)\n36:11 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('controllers/index.js', function (assert) {

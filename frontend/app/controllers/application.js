@@ -15,15 +15,18 @@ export default Ember.Controller.extend({
     logout(){
       this.get('auth').logout();
     },
-    activateIFTTT(){
+    testPost(){
       var data = {
-        eventtype: 'dashboard_on',
-        timestamp: Date.now().toString(),
-        userid: this.get('auth.userid')
+        eventtype: 'unit-test-events',
+		timestamp: 1500681745,
+		userid: 'myname',
+		commstatus: 'Open',
+		name: 'Arty McArtface',
+		description: 'Hi, I\'m a new artist person and I will work for cheap!'
       };
 
       Ember.$.ajax({
-        url:'/api/activateifttt',
+        url:'/api/events/',
         type:"POST",
         data: JSON.stringify(data),
         contentType:"application/json",
