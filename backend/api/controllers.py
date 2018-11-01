@@ -125,6 +125,13 @@ class Events(APIView):
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
 	
+    def get_object(self, pk):
+        try:
+            print 'Attempt Get ' + pk
+            return Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            raise Http404
+    
     def get(self, request, format=None):
         events = Event.objects.all()
         json_data = serializers.serialize('json', events)
@@ -166,9 +173,25 @@ class Events(APIView):
     
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
-        snippet.delete()
+        #snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+    
+class EventDetail(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+    
+    def get_object(self, pk):
+        try:
+            print 'Attempt Get ' + pk
+            return Event.objects.get(pk=pk)
+        except Event.DoesNotExist:
+            raise Http404
+            
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)        
 
 class ActivateIFTTT(APIView):
     permission_classes = (AllowAny,)

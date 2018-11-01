@@ -1887,7 +1887,7 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
   exports.default = Ember.Route.extend({
     getData: function getData() {
       var items = Ember.A([]);
-      return Ember.$.get('/api/events').then(function (events) {
+      return Ember.$.get('/api/events/').then(function (events) {
         events.forEach(function (event) {
           // console.log(event);
           items.addObject({
