@@ -140,13 +140,18 @@ class Events(APIView):
         userid = request.data.get('userid')
         requestor = request.META['REMOTE_ADDR']
         commstatus = request.data.get('commstatus')
+        description = request.data.get('description')
+        name = request.data.get('name')
+        
         
         newEvent = Event(
             eventtype=eventtype,
             timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
             userid=userid,
             requestor=requestor,
-            commstatus=commstatus
+            commstatus=commstatus,
+            description = description,
+            name = name
         )
 
         try:
@@ -158,6 +163,11 @@ class Events(APIView):
         newEvent.save()
         print 'New Event Logged from: ' + requestor
         return Response({'success': True}, status=status.HTTP_200_OK)
+    
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class ActivateIFTTT(APIView):

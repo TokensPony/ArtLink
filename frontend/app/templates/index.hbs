@@ -15,10 +15,11 @@
 				<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
 			{{/if}}
 			<div class="box-masonry-text">
-				<h5>(ID: {{item.id}}) {{item.eventtype}}</h5>
-				<h3>{{item.commstatus}}</h3>
+				<h5>{{item.name}}</h5>
+				<h5>{{item.commstatus}}</h5>
+				
 				<div class="box-masonry-desription">
-					<p>{{moment-format item.timestamp 'dddd MMMM Do YYYY h:mm:ss a'}}</p>
+					<p>{{item.description}}</p>
 				</div>
 			</div>
 		{{/masonry-item}}
