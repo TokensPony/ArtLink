@@ -24,15 +24,11 @@ var defaultitems = Ember.A([
 export default Ember.Route.extend({
   getData(){
     var items = Ember.A([]);
-    return Ember.$.get('/api/events/').then(function(events){
+    return Ember.$.get('/api/profiles/').then(function(events){
       events.forEach(function(event){
         // console.log(event);
         items.addObject({
           id: event.pk,
-          eventtype: event.fields.eventtype,
-          requestor: event.fields.requestor,
-          timestamp: event.fields.timestamp,
-          userid: event.fields.userid,
 		  commstatus: event.fields.commstatus,
 		  description: event.fields.description,
 		  name: event.fields.name,

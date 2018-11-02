@@ -26,6 +26,9 @@ class Profile(models.Model):
     name = models.CharField(max_length=1000, blank=False)
     def __str__(self):
         return str(self.eventtype)
+        
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
 class EventAdmin(admin.ModelAdmin):
     list_display = ('eventtype', 'timestamp')

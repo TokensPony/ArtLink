@@ -17,16 +17,13 @@ export default Ember.Controller.extend({
     },
     testPost(){
       var data = {
-        eventtype: 'unit-test-events',
-		timestamp: 1500681745,
-		userid: 'myname',
 		commstatus: 'Open',
 		name: 'Arty McArtface',
 		description: 'Hi, I\'m a new artist person and I will work for cheap!'
       };
 
       Ember.$.ajax({
-        url:'/api/events/',
+        url:'/api/profiles/',
         type:"POST",
         data: JSON.stringify(data),
         contentType:"application/json",

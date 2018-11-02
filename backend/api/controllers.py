@@ -19,6 +19,7 @@ from django.shortcuts import *
 from django.db import models
 from django.contrib.auth.models import *
 from api.models import *
+from api.serializers import *
 
 #REST API
 from rest_framework import viewsets, filters, parsers, renderers
@@ -190,6 +191,7 @@ class Profiles(APIView):
     def get(self, request, format=None):
         profiles = Profile.objects.all()
         json_data = serializers.serialize('json', profiles)
+        #json_data = ProfileSerializer('json', profiles)
         content = {'profiles': json_data}
         return HttpResponse(json_data, content_type='json')
 
@@ -215,10 +217,11 @@ class Profiles(APIView):
             return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
 
         newProfile.save()
-        print 'New Profile Logged from: ' + requestor
+        #print 'New Profile Logged from: ' + requestor
         return Response({'success': True}, status=status.HTTP_200_OK)
 
-#ProfileDetail    
+#ProfileDetail
+   
 class ProfileDetail(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
@@ -234,7 +237,13 @@ class ProfileDetail(APIView):
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
         snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)                
+        return Response(status=status.HTTP_204_NO_CONTENT)  
+
+'''class ProfileViewSet(viewsets.ModelViewSet):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+'''            
+                  
 
 class ActivateIFTTT(APIView):
     permission_classes = (AllowAny,)

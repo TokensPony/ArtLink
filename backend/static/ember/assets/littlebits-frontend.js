@@ -1084,16 +1084,13 @@ define('littlebits-frontend/controllers/application', ['exports'], function (exp
       },
       testPost: function testPost() {
         var data = {
-          eventtype: 'unit-test-events',
-          timestamp: 1500681745,
-          userid: 'myname',
           commstatus: 'Open',
           name: 'Arty McArtface',
           description: 'Hi, I\'m a new artist person and I will work for cheap!'
         };
 
         Ember.$.ajax({
-          url: '/api/events/',
+          url: '/api/profiles/',
           type: "POST",
           data: JSON.stringify(data),
           contentType: "application/json",
@@ -1890,15 +1887,11 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
   exports.default = Ember.Route.extend({
     getData: function getData() {
       var items = Ember.A([]);
-      return Ember.$.get('/api/events/').then(function (events) {
+      return Ember.$.get('/api/profiles/').then(function (events) {
         events.forEach(function (event) {
           // console.log(event);
           items.addObject({
             id: event.pk,
-            eventtype: event.fields.eventtype,
-            requestor: event.fields.requestor,
-            timestamp: event.fields.timestamp,
-            userid: event.fields.userid,
             commstatus: event.fields.commstatus,
             description: event.fields.description,
             name: event.fields.name,
