@@ -61,16 +61,18 @@ class Register(APIView):
 
     def post(self, request, *args, **kwargs):
         # Login
-        username = request.POST.get('username') #you need to apply validators to these
+        username = request.data.get('username') #you need to apply validators to these
         print username
-        password = request.POST.get('password') #you need to apply validators to these
-        email = request.POST.get('email') #you need to apply validators to these
+        password = request.data.get('password') #you need to apply validators to these
+        print password
+        email = request.data.get('email') #you need to apply validators to these
+        '''
         gender = request.POST.get('gender') #you need to apply validators to these
         age = request.POST.get('age') #you need to apply validators to these
         educationlevel = request.POST.get('educationlevel') #you need to apply validators to these
         city = request.POST.get('city') #you need to apply validators to these
         state = request.POST.get('state') #you need to apply validators to these
-
+        '''
         print request.POST.get('username')
         if User.objects.filter(username=username).exists():
             return Response({'username': 'Username is taken.', 'status': 'error'})
@@ -79,11 +81,14 @@ class Register(APIView):
 
         #especially before you pass them in here
         newuser = User.objects.create_user(email=email, username=username, password=password)
+        newuser.save()
         #Profile
+        '''
         newprofile = Profile(user=newuser, gender=gender, age=age, educationlevel=educationlevel, city=city, state=state)
         newprofile.save()
-
-        return Response({'status': 'success', 'userid': newuser.id, 'profile': newprofile.id})
+        '''
+        #, 'profile': newprofile.id
+        return Response({'status': 'success', 'userid': newuser.id})
 
 class Session(APIView):
     permission_classes = (AllowAny,)
@@ -125,7 +130,7 @@ class Events(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
-    
+
     def get(self, request, format=None):
         events = Event.objects.all()
         json_data = serializers.serialize('json', events)
@@ -143,8 +148,8 @@ class Events(APIView):
         commstatus = request.data.get('commstatus')
         description = request.data.get('description')
         name = request.data.get('name')
-        
-        
+
+
         newEvent = Event(
             eventtype=eventtype,
             timestamp=datetime.datetime.fromtimestamp(timestamp/1000, pytz.utc),
@@ -164,30 +169,30 @@ class Events(APIView):
         newEvent.save()
         print 'New Event Logged from: ' + requestor
         return Response({'success': True}, status=status.HTTP_200_OK)
-    
+
 class EventDetail(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
-    
+
     def get_object(self, pk):
         try:
             print 'Attempt Get ' + pk
             return Event.objects.get(pk=pk)
         except Event.DoesNotExist:
             raise Http404
-            
+
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-#Profiles        
+#Profiles
 class Profiles(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
-    
+
     def get(self, request, format=None):
         profiles = Profile.objects.all()
         json_data = serializers.serialize('json', profiles)
@@ -202,8 +207,8 @@ class Profiles(APIView):
         commstatus = request.data.get('commstatus')
         description = request.data.get('description')
         name = request.data.get('name')
-        
-        
+
+
         newProfile = Profile(
             commstatus=commstatus,
             description = description,
@@ -221,34 +226,34 @@ class Profiles(APIView):
         return Response({'success': True}, status=status.HTTP_200_OK)
 
 #ProfileDetail
-   
+
 class ProfileDetail(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
     renderer_classes = (renderers.JSONRenderer, )
-    
+
     def get_object(self, pk):
         try:
             print 'Attempt Get ' + pk
             return Profile.objects.get(pk=pk)
         except Profile.DoesNotExist:
             raise Http404
-            
+
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
         snippet.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)  
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 '''class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
-'''            
-                  
+'''
+
 
 class ActivateIFTTT(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
-    renderer_classes = (renderers.JSONRenderer, )	
+    renderer_classes = (renderers.JSONRenderer, )
     def post(self,request):
         print 'REQUEST DATA'
         print str(request.data)

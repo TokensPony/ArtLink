@@ -3,11 +3,10 @@ import Ember from 'ember';
 
 var defaultitems = Ember.A([
   {
-    title: 'CYBR 8470',
+    title: 'ArtLink',
     description: 'Exciting stuff!',
     img: 'img/NGC-logo.png',
     link: '',
-    link_external: 'http://mlhale.github.io/CYBR8470'
 
   },
 	{
@@ -29,9 +28,9 @@ export default Ember.Route.extend({
         // console.log(event);
         items.addObject({
           id: event.pk,
-		  commstatus: event.fields.commstatus,
-		  description: event.fields.description,
-		  name: event.fields.name,
+		      commstatus: event.fields.commstatus,
+		      description: event.fields.description,
+		      name: event.fields.name,
           img: 'img/event-icon.jpg',
           link: 'index'
         });

@@ -12,7 +12,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('controllers/application.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/application.js should pass ESLint\n\n32:11 - Unexpected console statement. (no-console)\n33:11 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'controllers/application.js should pass ESLint\n\n20:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n21:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n22:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n32:11 - Unexpected console statement. (no-console)\n33:11 - Unexpected console statement. (no-console)\n40:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n41:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)');
   });
 
   QUnit.test('controllers/index.js', function (assert) {
@@ -47,7 +47,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/index.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/index.js should pass ESLint\n\n32:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n33:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n34:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n41:7 - Unexpected console statement. (no-console)\n42:7 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'routes/index.js should pass ESLint\n\n31:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n32:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n33:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n40:7 - Unexpected console statement. (no-console)\n41:7 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('routes/login.js', function (assert) {

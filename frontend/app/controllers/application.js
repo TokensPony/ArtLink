@@ -17,9 +17,9 @@ export default Ember.Controller.extend({
     },
     testPost(){
       var data = {
-		commstatus: 'Open',
-		name: 'Arty McArtface',
-		description: 'Hi, I\'m a new artist person and I will work for cheap!'
+    		commstatus: 'Open',
+    		name: 'Arty McArtface',
+    		description: 'Hi, I\'m a new artist person and I will work for cheap!'
       };
 
       Ember.$.ajax({
@@ -33,6 +33,14 @@ export default Ember.Controller.extend({
           console.log(response);
         }
       });
+    },
+    createNew(){
+      var newprofile = this.store.createRecord('profile', {
+        commstatus: 'Open',
+    		name: 'Tester Name',
+    		description: 'Hi, I\'m a new artist person and I will work for cheap!'
+      });
+      newprofile.save();
     }
   }
 });
