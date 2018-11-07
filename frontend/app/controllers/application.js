@@ -18,7 +18,7 @@ export default Ember.Controller.extend({
     testPost(){
       var data = {
     		commstatus: 'Open',
-    		name: 'Arty McArtface',
+    		user: 1,
     		description: 'Hi, I\'m a new artist person and I will work for cheap!'
       };
 

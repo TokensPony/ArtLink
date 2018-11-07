@@ -30,7 +30,7 @@ export default Ember.Route.extend({
           id: event.pk,
 		      commstatus: event.fields.commstatus,
 		      description: event.fields.description,
-		      name: event.fields.name,
+          user: event.fields.user,
           img: 'img/event-icon.jpg',
           link: 'index'
         });

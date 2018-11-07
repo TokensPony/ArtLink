@@ -190,12 +190,13 @@ class Profiles(APIView):
 
     def get(self, request, format=None):
         profiles = Profile.objects.all()
-        #json_data = serializers.serialize('json', profiles)
+        json_data = serializers.serialize('json', profiles)
         #json_data = ProfileSerializer('json', profiles)
-        #content = {'profiles': json_data}
-        #return HttpResponse(json_data, content_type='json')
-        serializer = ProfileSerializer(profiles, many=True)
-        return Response(serializer.data)
+        content = {'profiles': json_data}
+        #json_data.isValid()
+        return HttpResponse(json_data, content_type='json')
+        #serializer = ProfileSerializer(profiles, many=True)
+        #return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         print 'REQUEST DATA'
@@ -203,13 +204,13 @@ class Profiles(APIView):
 
         commstatus = request.data.get('commstatus')
         description = request.data.get('description')
-        name = request.data.get('name')
+        user = request.data.get('user')#name = request.data.get('name')
 
 
         newProfile = Profile(
             commstatus=commstatus,
             description = description,
-            name = name
+            user=user
         )
 
         try:
