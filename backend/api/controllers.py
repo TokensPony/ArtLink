@@ -19,7 +19,7 @@ from django.shortcuts import *
 from django.db import models
 from django.contrib.auth.models import *
 from api.models import *
-from api.serializers import *
+from api.serializer import *
 
 #REST API
 from rest_framework import viewsets, filters, parsers, renderers
@@ -66,13 +66,8 @@ class Register(APIView):
         password = request.data.get('password') #you need to apply validators to these
         print password
         email = request.data.get('email') #you need to apply validators to these
-        '''
-        gender = request.POST.get('gender') #you need to apply validators to these
-        age = request.POST.get('age') #you need to apply validators to these
-        educationlevel = request.POST.get('educationlevel') #you need to apply validators to these
-        city = request.POST.get('city') #you need to apply validators to these
-        state = request.POST.get('state') #you need to apply validators to these
-        '''
+        commstatus = request.data.get('commstatus')
+
         print request.POST.get('username')
         if User.objects.filter(username=username).exists():
             return Response({'username': 'Username is taken.', 'status': 'error'})
@@ -83,12 +78,12 @@ class Register(APIView):
         newuser = User.objects.create_user(email=email, username=username, password=password)
         newuser.save()
         #Profile
-        '''
-        newprofile = Profile(user=newuser, gender=gender, age=age, educationlevel=educationlevel, city=city, state=state)
+
+        newprofile = Profile(user=newuser, commstatus=commstatus)
         newprofile.save()
-        '''
+
         #, 'profile': newprofile.id
-        return Response({'status': 'success', 'userid': newuser.id})
+        return Response({'status': 'success', 'userid': newuser.id, 'profile': newprofile.id})
 
 class Session(APIView):
     permission_classes = (AllowAny,)
@@ -195,10 +190,12 @@ class Profiles(APIView):
 
     def get(self, request, format=None):
         profiles = Profile.objects.all()
-        json_data = serializers.serialize('json', profiles)
+        #json_data = serializers.serialize('json', profiles)
         #json_data = ProfileSerializer('json', profiles)
-        content = {'profiles': json_data}
-        return HttpResponse(json_data, content_type='json')
+        #content = {'profiles': json_data}
+        #return HttpResponse(json_data, content_type='json')
+        serializer = ProfileSerializer(profiles, many=True)
+        return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         print 'REQUEST DATA'
@@ -238,6 +235,13 @@ class ProfileDetail(APIView):
             return Profile.objects.get(pk=pk)
         except Profile.DoesNotExist:
             raise Http404
+
+    def get(self, request, pk, format=None):
+        profile = self.get_object(pk)
+        json_data = serializers.serialize('json', [profile, ])
+        #json_data = ProfileSerializer('json', profiles)
+        content = {'profile': json_data}
+        return HttpResponse(json_data, content_type='json')
 
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
