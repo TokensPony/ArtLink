@@ -23,6 +23,9 @@ class Event(models.Model):
     def __str__(self):
         return str(self.eventtype)
 
+class EventAdmin(admin.ModelAdmin):
+    list_display = ('eventtype', 'timestamp')
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     commstatus = models.CharField(max_length=1000, blank=True)
@@ -33,6 +36,7 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.name)
+
 '''
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
@@ -47,8 +51,16 @@ def save_user_profile(sender, instance, **kwargs):
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user',)
 
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('eventtype', 'timestamp')
+class Commission(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    commtype = models.CharField(max_length=1000, blank=True)
+    description = models.TextField(max_length=1000, blank=True)
+    price_min = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+    price_max = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
+    slots = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(99)], blank=True)
+
+class CommissionAdmin(admin.ModelAdmin):
+    list_display = ('user', 'commtype')
 
 class ApiKey(models.Model):
     owner = models.CharField(max_length=1000, blank=False)

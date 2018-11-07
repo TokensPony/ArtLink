@@ -9,3 +9,4 @@ from api.models import *
 admin.site.register(Event, EventAdmin)
 admin.site.register(ApiKey, ApiKeyAdmin)
 admin.site.register(Profile, ProfileAdmin)
+admin.site.register(Commission, CommissionAdmin)
