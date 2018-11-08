@@ -11,7 +11,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('user', 'commstatus', 'description', 'artstyle', 'willdraw', 'wontdraw')
+        fields = ('id', 'user', 'commstatus', 'description', 'artstyle', 'willdraw', 'wontdraw')
 
     def create(self, validated_data):
         """
@@ -27,4 +27,4 @@ class ProfileSerializer(serializers.ModelSerializer):
                             artstyle=validated_data.pop('artstyle'),
                             willdraw=validated_data.pop('willdraw'),
                             wontdraw=validated_data.pop('wontdraw'))
-        return student
+        return profile

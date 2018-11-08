@@ -28,9 +28,10 @@ export default Ember.Route.extend({
         // console.log(event);
         items.addObject({
           id: event.pk,
-		      commstatus: event.fields.commstatus,
-		      description: event.fields.description,
-          user: event.fields.user,
+          username: event.user.username,
+		      commstatus: event.commstatus,
+		      description: event.description,
+          user: event.user,
           img: 'img/event-icon.jpg',
           link: 'index'
         });

@@ -67,6 +67,7 @@ class Register(APIView):
         print password
         email = request.data.get('email') #you need to apply validators to these
         commstatus = request.data.get('commstatus')
+        description = "Hello everybody! I'm an artist, and this is my test description!"
 
         print request.POST.get('username')
         if User.objects.filter(username=username).exists():
@@ -79,7 +80,7 @@ class Register(APIView):
         newuser.save()
         #Profile
 
-        newprofile = Profile(user=newuser, commstatus=commstatus)
+        newprofile = Profile(user=newuser, commstatus=commstatus, description=description)
         newprofile.save()
 
         #, 'profile': newprofile.id
@@ -190,13 +191,12 @@ class Profiles(APIView):
 
     def get(self, request, format=None):
         profiles = Profile.objects.all()
-        json_data = serializers.serialize('json', profiles)
+        #json_data = serializers.serialize('json', profiles)
         #json_data = ProfileSerializer('json', profiles)
-        content = {'profiles': json_data}
-        #json_data.isValid()
-        return HttpResponse(json_data, content_type='json')
-        #serializer = ProfileSerializer(profiles, many=True)
-        #return Response(serializer.data)
+        #content = {'profiles': json_data}
+        #return HttpResponse(json_data, content_type='json')
+        serializer = ProfileSerializer(profiles, many=True)
+        return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
         print 'REQUEST DATA'
