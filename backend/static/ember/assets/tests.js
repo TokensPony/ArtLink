@@ -15,6 +15,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
     assert.ok(false, 'controllers/application.js should pass ESLint\n\n20:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n21:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n22:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n32:11 - Unexpected console statement. (no-console)\n33:11 - Unexpected console statement. (no-console)\n40:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n41:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)');
   });
 
+  QUnit.test('controllers/createaccount.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n21:11 - Unexpected console statement. (no-console)\n22:11 - Unexpected console statement. (no-console)');
+  });
+
   QUnit.test('controllers/index.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'controllers/index.js should pass ESLint\n\n');
@@ -43,6 +48,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
   QUnit.test('router.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'router.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('routes/createaccount.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/createaccount.js should pass ESLint\n\n');
   });
 
   QUnit.test('routes/index.js', function (assert) {
@@ -184,6 +194,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/controllers/application-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/controllers/createaccount-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/createaccount-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/controllers/index-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/controllers/index-test.js should pass ESLint\n\n');
@@ -202,6 +217,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
   QUnit.test('unit/initializers/constants-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/initializers/constants-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/routes/createaccount-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/createaccount-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/routes/index-test.js', function (assert) {
@@ -228,6 +248,20 @@ define('littlebits-frontend/tests/unit/controllers/application-test', ['ember-qu
   'use strict';
 
   (0, _emberQunit.moduleFor)('controller:application', 'Unit | Controller | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('littlebits-frontend/tests/unit/controllers/createaccount-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('controller:createaccount', 'Unit | Controller | createaccount', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
@@ -314,6 +348,19 @@ define('littlebits-frontend/tests/unit/initializers/constants-test', ['littlebit
 
     // you would normally confirm the results of the initializer here
     assert.ok(true);
+  });
+});
+define('littlebits-frontend/tests/unit/routes/createaccount-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:createaccount', 'Unit | Route | createaccount', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
   });
 });
 define('littlebits-frontend/tests/unit/routes/index-test', ['ember-qunit'], function (_emberQunit) {
