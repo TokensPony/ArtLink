@@ -49,6 +49,8 @@ To run my app,
 ```bash
 docker-compose up
 ```
+NOTE
+Once the app is running on localhost. You will see the page, but no data. Currently the page shows an index of all users EXCEPT admins. To see the current state of the page's functionality in action. You must use the create account page linked on the left of the page to create an account. There are currently no validators, so anything will do. Once created, it will take you back to the homepage, where you should be able to see your basic profile info (if not, then try refreshing the page). You cannot create multiple accounts with matching usernames and/or email addresses however. To see full details about the models and data, login with your admin account and go to localhost/admin/
 
 # License
 The MIT License (MIT)
