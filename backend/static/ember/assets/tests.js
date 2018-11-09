@@ -17,7 +17,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('controllers/createaccount.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n21:11 - Unexpected console statement. (no-console)\n22:11 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n23:11 - Unexpected console statement. (no-console)\n24:11 - Unexpected console statement. (no-console)\n28:9 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('controllers/index.js', function (assert) {
@@ -67,7 +67,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('services/auth-manager.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'services/auth-manager.js should pass ESLint\n\n18:3 - Unexpected console statement. (no-console)\n54:9 - Unexpected console statement. (no-console)\n59:5 - Unexpected console statement. (no-console)\n66:3 - Unexpected console statement. (no-console)\n70:5 - Unexpected console statement. (no-console)\n107:5 - Unexpected console statement. (no-console)\n113:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'services/auth-manager.js should pass ESLint\n\n19:3 - Unexpected console statement. (no-console)\n55:9 - Unexpected console statement. (no-console)\n60:5 - Unexpected console statement. (no-console)\n67:3 - Unexpected console statement. (no-console)\n71:5 - Unexpected console statement. (no-console)\n108:5 - Unexpected console statement. (no-console)\n114:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('services/constants.js', function (assert) {

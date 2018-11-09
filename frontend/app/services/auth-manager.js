@@ -7,6 +7,7 @@ export default Ember.Service.extend({
 	//field vars
 	username: '',
 	password: '',
+	email: '',
 	remember: false,
 	errorMsg: '',
 
