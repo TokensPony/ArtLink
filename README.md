@@ -38,8 +38,9 @@ Accounts can be deleted by admins, if needed.
 ## Installation
 NOTE: This app assumes you have python, docker, and django installed
 ```bash
-docker-build .
+docker-compose build
 docker-compose run django bash
+python manage.py makemigrations
 python manage.py migrate
 python manage.py createsuperuser --username admin --email admin
 ```
