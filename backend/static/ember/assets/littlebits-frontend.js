@@ -1948,14 +1948,19 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
       return Ember.$.get('/api/profiles/').then(function (events) {
         events.forEach(function (event) {
           // console.log(event);
+          var uName = event.user.username;
+          var picLink = 'img/no-image.jpg';
+          if (uName == "Typhlosion95") {
+            picLink = 'img/typhlosion95.jpg';
+          }
           items.addObject({
-            id: event.pk,
+            id: event.id,
             username: event.user.username,
             commstatus: event.commstatus,
             description: event.description,
             user: event.user,
-            img: 'img/event-icon.jpg',
-            link: 'index'
+            img: picLink,
+            link_external: '/api/profiles/' + event.id
           });
         });
         return items.reverse();
@@ -2412,6 +2417,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+e7888631"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+77325db8"});
 }
 //# sourceMappingURL=littlebits-frontend.map

@@ -57,7 +57,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/index.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/index.js should pass ESLint\n\n32:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n33:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n41:7 - Unexpected console statement. (no-console)\n42:7 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'routes/index.js should pass ESLint\n\n37:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n38:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n46:7 - Unexpected console statement. (no-console)\n47:7 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('routes/login.js', function (assert) {

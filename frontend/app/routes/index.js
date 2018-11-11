@@ -26,14 +26,19 @@ export default Ember.Route.extend({
     return Ember.$.get('/api/profiles/').then(function(events){
       events.forEach(function(event){
         // console.log(event);
+        var uName = event.user.username;
+        var picLink = 'img/no-image.jpg';
+        if(uName == "Typhlosion95"){
+          picLink = 'img/typhlosion95.jpg';
+        }
         items.addObject({
-          id: event.pk,
+          id: event.id,
           username: event.user.username,
 		      commstatus: event.commstatus,
 		      description: event.description,
           user: event.user,
-          img: 'img/event-icon.jpg',
-          link: 'index'
+          img: picLink,
+          link_external: '/api/profiles/' + event.id
         });
       });
       return items.reverse()
