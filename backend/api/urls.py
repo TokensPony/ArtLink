@@ -16,6 +16,8 @@ urlpatterns = [
     url(r'^events/(?P<pk>\d+)$', csrf_exempt(controllers.EventDetail.as_view())),
     url(r'^profiles/$', csrf_exempt(controllers.Profiles.as_view())),
     url(r'^profiles/(?P<pk>\d+)$', csrf_exempt(controllers.ProfileDetail.as_view())),
+    url(r'^commissions/$', csrf_exempt(controllers.Commissions.as_view())),
+    url(r'^commissions/(?P<pk>\d+)$', csrf_exempt(controllers.CommissionDetail.as_view())),
     url(r'^activateifttt', csrf_exempt(controllers.ActivateIFTTT.as_view())),
     url(r'^', include(router.urls)),
 ]

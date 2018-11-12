@@ -249,6 +249,79 @@ class ProfileDetail(APIView):
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class Commissions(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+
+    def get(self, request, format=None):
+        commissions = Commission.objects.all()
+        serializer = CommissionSerializer(commissions, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        print 'REQUEST DATA'
+        print str(request.data)
+
+        commtype = request.data.get('commstatus')
+        description = request.data.get('description')
+        user = request.data.get('user')#name = request.data.get('name')
+        price_min = request.data.get('price_min')
+        price_max = request.data.get('price_max')
+        slots = request.data.get('slots')
+        newCommission = Commission(
+            commtype=commstatus,
+            description = description,
+            user=user,
+            price_min = price_min,
+            price_max = price_max,
+            slots = slots
+        )
+
+        try:
+            newCommission.clean_fields()
+        except ValidationError as e:
+            print e
+            return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+
+        newCommission.save()
+        #print 'New Profile Logged from: ' + requestor
+        return Response({'success': True}, status=status.HTTP_200_OK)
+
+#ProfileDetail
+
+class CommissionDetail(APIView):
+    permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,parsers.FormParser)
+    renderer_classes = (renderers.JSONRenderer, )
+
+    def get_object(self, pk):
+        try:
+            print 'Attempt Get ' + pk
+            #user = User.objects.get(pk=pk)
+            #return Commission.objects.get(user = user)
+            return Commission.objects.get(pk=pk)
+        except Commission.DoesNotExist:
+            raise Http404
+
+    def get(self, request, pk, format=None):
+        user = User.objects.get(pk=pk)
+        commissions = Commission.objects.filter(user = user)
+        serializer = CommissionSerializer(commissions, many=True)
+        return Response(serializer.data)
+        '''
+        commission = self.get_object(pk)
+        json_data = serializers.serialize('json', [commission, ])
+        #json_data = ProfileSerializer('json', profiles)
+        content = {'commission': json_data}
+        return HttpResponse(json_data, content_type='json')
+        '''
+
+    def delete(self, request, pk, format=None):
+        snippet = self.get_object(pk)
+        snippet.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 '''class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
