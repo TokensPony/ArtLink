@@ -191,10 +191,6 @@ class Profiles(APIView):
 
     def get(self, request, format=None):
         profiles = Profile.objects.all()
-        #json_data = serializers.serialize('json', profiles)
-        #json_data = ProfileSerializer('json', profiles)
-        #content = {'profiles': json_data}
-        #return HttpResponse(json_data, content_type='json')
         serializer = ProfileSerializer(profiles, many=True)
         return Response(serializer.data)
 
@@ -238,11 +234,25 @@ class ProfileDetail(APIView):
             raise Http404
 
     def get(self, request, pk, format=None):
-        profile = self.get_object(pk)
-        json_data = serializers.serialize('json', [profile, ])
+        user = User.objects.get(pk=pk)
+        profiles = Profile.objects.filter(user = user)
+        #profile = self.get_object(pk)
+        #json_data = serializers.serialize('json', [profile, ])
         #json_data = ProfileSerializer('json', profiles)
-        content = {'profile': json_data}
-        return HttpResponse(json_data, content_type='json')
+        #content = {'profile': json_data}
+        #return HttpResponse(json_data, content_type='json')
+        serializer = ProfileSerializer(profiles, many=True)
+        return Response(serializer.data)
+
+    def patch(self, request, pk, format=None):
+        user = User.objects.get(pk=pk)
+        profile = Profile.objects.filter(user = user)
+        #profile = self.get_object(pk)
+        serializer = ProfileSerializer(profile, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
@@ -309,6 +319,16 @@ class CommissionDetail(APIView):
         commissions = Commission.objects.filter(user = user)
         serializer = CommissionSerializer(commissions, many=True)
         return Response(serializer.data)
+
+    def patch(self, request, pk, format=None):
+        #user = User.objects.get(pk=pk)
+        #commission = Commission.objects.filter(user = user)
+        commission = self.get_object(pk)
+        serializer = CommissionSerializer(commission, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         '''
         commission = self.get_object(pk)
         json_data = serializers.serialize('json', [commission, ])
