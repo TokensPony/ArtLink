@@ -38,7 +38,7 @@ export default Ember.Route.extend({
 		      description: event.description,
           user: event.user,
           img: picLink,
-          link_external: '/api/profiles/' + event.id
+          link_external: '/api/profiles/' + event.user.id
         });
       });
       return items.reverse()

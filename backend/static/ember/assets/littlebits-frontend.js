@@ -1128,7 +1128,10 @@ define('littlebits-frontend/controllers/createaccount', ['exports'], function (e
           username: this.get('auth.username'),
           password: this.get('auth.password'),
           email: this.get('auth.email'),
-          commstatus: 'Open'
+          commstatus: 'Open',
+          artstyle: 'Digital',
+          willdraw: 'MLP, Undertale',
+          wontdraw: 'Family Guy'
         };
 
         Ember.$.ajax({
@@ -1908,6 +1911,7 @@ define('littlebits-frontend/router', ['exports', 'littlebits-frontend/config/env
   Router.map(function () {
     this.route('login');
     this.route('createaccount');
+    this.route('profile');
   });
 
   exports.default = Router;
@@ -1960,7 +1964,7 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
             description: event.description,
             user: event.user,
             img: picLink,
-            link_external: '/api/profiles/' + event.id
+            link_external: '/api/profiles/' + event.user.id
           });
         });
         return items.reverse();
@@ -1991,6 +1995,14 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
   });
 });
 define('littlebits-frontend/routes/login', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Route.extend({});
+});
+define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
   'use strict';
 
   Object.defineProperty(exports, "__esModule", {
@@ -2213,6 +2225,14 @@ define("littlebits-frontend/templates/login", ["exports"], function (exports) {
   });
   exports.default = Ember.HTMLBars.template({ "id": "JZyXJmQg", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"row\"],[13],[0,\"\\n\"],[0,\"\\t\"],[11,\"div\",[]],[15,\"class\",\"col-sm-6 col-md-4 login-box shadow-2\"],[13],[0,\"\\n\\t\\t\"],[11,\"form\",[]],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"row login-box\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"col-sm-12 col-md-10 col-md-offset-1\"],[13],[0,\"\\n\"],[6,[\"if\"],[[28,[\"auth\",\"errorMsg\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"alert alert-danger\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[15,\"style\",\"text-align: center;\"],[13],[0,\"Incorrect username/password\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null],[0,\"\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"form-group\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"input-group\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[11,\"span\",[]],[15,\"class\",\"input-group-addon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\\t\"],[11,\"i\",[]],[15,\"class\",\"glyphicon glyphicon-user\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[1,[33,[\"input\"],null,[[\"type\",\"class\",\"value\",\"enter\",\"placeholder\",\"autofocus\"],[\"text\",\"input-sm form-control\",[28,[\"auth\",\"username\"]],\"login\",\"Username\",\"autofocus\"]]],false],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"form-group\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"input-group\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[11,\"span\",[]],[15,\"class\",\"input-group-addon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\\t\"],[11,\"i\",[]],[15,\"class\",\"glyphicon glyphicon-lock\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\\t\"],[1,[33,[\"input\"],null,[[\"type\",\"class\",\"value\",\"enter\",\"placeholder\",\"type\"],[\"text\",\"input-sm form-control\",[28,[\"auth\",\"password\"]],\"login\",\"Password\",\"password\"]]],false],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"form-group\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\\t\\t\"],[11,\"input\",[]],[15,\"type\",\"submit\"],[15,\"class\",\"btn btn-lg btn-primary btn-block\"],[15,\"value\",\"Sign in\"],[5,[\"action\"],[[28,[null]],\"login\"]],[13],[14],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\n\\t\\t\"],[14],[0,\"\\n\\t\"],[14],[0,\"\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/login.hbs" } });
 });
+define("littlebits-frontend/templates/profile", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "5rlw6HsD", "block": "{\"statements\":[[0,\"TEEEST\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+});
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';
 
@@ -2417,6 +2437,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+7e88e509"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+df2fb35c"});
 }
 //# sourceMappingURL=littlebits-frontend.map

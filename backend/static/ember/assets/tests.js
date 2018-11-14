@@ -17,7 +17,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('controllers/createaccount.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n23:11 - Unexpected console statement. (no-console)\n24:11 - Unexpected console statement. (no-console)\n28:9 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n26:11 - Unexpected console statement. (no-console)\n27:11 - Unexpected console statement. (no-console)\n31:9 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('controllers/index.js', function (assert) {
@@ -63,6 +63,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
   QUnit.test('routes/login.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'routes/login.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('routes/profile.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'routes/profile.js should pass ESLint\n\n');
   });
 
   QUnit.test('services/auth-manager.js', function (assert) {
@@ -234,6 +239,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/routes/login-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/routes/profile-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/profile-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/services/auth-manager-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/services/auth-manager-test.js should pass ESLint\n\n');
@@ -380,6 +390,19 @@ define('littlebits-frontend/tests/unit/routes/login-test', ['ember-qunit'], func
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:login', 'Unit | Route | login', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('littlebits-frontend/tests/unit/routes/profile-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:profile', 'Unit | Route | profile', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });

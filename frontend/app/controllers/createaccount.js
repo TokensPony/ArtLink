@@ -10,7 +10,10 @@ export default Ember.Controller.extend({
         username: this.get('auth.username'),
         password: this.get('auth.password'),
         email: this.get('auth.email'),
-        commstatus: 'Open'
+        commstatus: 'Open',
+        artstyle: 'Digital',
+        willdraw: 'MLP, Undertale',
+        wontdraw: 'Family Guy'
       };
 
       Ember.$.ajax({

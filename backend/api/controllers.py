@@ -68,6 +68,9 @@ class Register(APIView):
         email = request.data.get('email') #you need to apply validators to these
         commstatus = request.data.get('commstatus')
         description = "Hello everybody! I'm an artist, and this is my test description!"
+        artstyle = request.data.get('artstyle')
+        willdraw = request.data.get('willdraw')
+        wontdraw = request.data.get('wontdraw')
 
         print request.POST.get('username')
         if User.objects.filter(username=username).exists():
@@ -80,7 +83,8 @@ class Register(APIView):
         newuser.save()
         #Profile
 
-        newprofile = Profile(user=newuser, commstatus=commstatus, description=description)
+        newprofile = Profile(user=newuser, commstatus=commstatus, description=description,
+                            artstyle=artstyle, willdraw=willdraw, wontdraw=wontdraw)
         newprofile.save()
 
         #, 'profile': newprofile.id

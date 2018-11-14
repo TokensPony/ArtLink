@@ -28,11 +28,11 @@ class EventAdmin(admin.ModelAdmin):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    commstatus = models.CharField(max_length=1000, blank=True)
-    description = models.TextField(max_length=1000, blank=True)
-    artstyle = models.CharField(max_length=1000, blank=True)
-    willdraw = models.CharField(max_length=1000, blank=True)
-    wontdraw = models.CharField(max_length=1000, blank=True)
+    commstatus = models.CharField(max_length=1000, blank=False, default = '')
+    description = models.TextField(max_length=1000, blank=False, default = '')
+    artstyle = models.CharField(max_length=1000, blank=False, default = '')
+    willdraw = models.CharField(max_length=1000, blank=False, default = '')
+    wontdraw = models.CharField(max_length=1000, blank=False, default = '')
 
     def __str__(self):
         return str(self.user)
