@@ -30,6 +30,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
     assert.ok(true, 'controllers/login.js should pass ESLint\n\n');
   });
 
+  QUnit.test('controllers/profile.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'controllers/profile.js should pass ESLint\n\n');
+  });
+
   QUnit.test('initializers/auth-manager.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'initializers/auth-manager.js should pass ESLint\n\n');
@@ -67,7 +72,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/profile.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/profile.js should pass ESLint\n\n');
+    assert.ok(false, 'routes/profile.js should pass ESLint\n\n5:5 - Unexpected console statement. (no-console)\n18:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n19:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n25:7 - Unexpected console statement. (no-console)\n28:7 - Unexpected console statement. (no-console)\n29:7 - Unexpected console statement. (no-console)\n33:5 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('services/auth-manager.js', function (assert) {

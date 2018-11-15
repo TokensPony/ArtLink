@@ -1183,6 +1183,14 @@ define('littlebits-frontend/controllers/login', ['exports'], function (exports) 
 		}
 	});
 });
+define('littlebits-frontend/controllers/profile', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Controller.extend({});
+});
 define('littlebits-frontend/helpers/app-version', ['exports', 'littlebits-frontend/config/environment', 'ember-cli-app-version/utils/regexp'], function (exports, _environment, _regexp) {
   'use strict';
 
@@ -1911,7 +1919,10 @@ define('littlebits-frontend/router', ['exports', 'littlebits-frontend/config/env
   Router.map(function () {
     this.route('login');
     this.route('createaccount');
-    this.route('profile');
+    //this.route('profile');
+    this.route('profile', {
+      path: '/:profile'
+    }, function () {});
   });
 
   exports.default = Router;
@@ -2008,7 +2019,57 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Route.extend({});
+  exports.default = Ember.Route.extend({
+    getData: function getData() {
+      console.log(arguments[0]);
+      var items = Ember.A([]);
+      return Ember.$.get('/api/profiles/' + arguments[0]).then(function (events) {
+        events.forEach(function (event) {
+          // console.log(event);
+          var uName = event.user.username;
+          var picLink = 'img/no-image.jpg';
+          if (uName == "Typhlosion95") {
+            picLink = 'img/typhlosion95.jpg';
+          }
+          items.addObject({
+            id: event.user.id,
+            username: event.user.username,
+            commstatus: event.commstatus,
+            description: event.description,
+            user: event.user,
+            img: picLink,
+            link_external: '/api/profiles/' + event.user.id
+          });
+        });
+        console.log(items);
+        return items.reverse();
+      }, function (msg) {
+        //error
+        console.log('Error loading events:');
+        console.log(msg.statusText);
+      });
+    },
+    model: function model(params) {
+      console.log(params.profile);
+      return this.getData(params.profile);
+    },
+    setupController: function setupController(controller, model) {
+      controller.set('content', model);
+      /*this._super(controller, model);
+      controller.set('defaultitems', defaultitems);
+      var route = this;
+      setInterval(Ember.run.later(route, function() {
+        // code here will execute within a RunLoop about every minute
+        if(controller.get('auth.isLoggedIn')){
+          route.getData().then(function(data){
+            if(data[0].id!=controller.get('content')[0].id){
+              controller.get('content').insertAt(0, data[0]);
+            }
+          });
+        }
+      }, 5), 3000);*/
+    }
+  });
 });
 define('littlebits-frontend/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (exports, _ajax) {
   'use strict';
@@ -2231,7 +2292,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "5rlw6HsD", "block": "{\"statements\":[[0,\"TEEEST\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "dya9D90+", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,[\"content\",\"items\"]],false],[0,\"\\n\"],[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[0,\"      \"],[1,[28,[\"item\",\"username\"]],false],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},null],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';

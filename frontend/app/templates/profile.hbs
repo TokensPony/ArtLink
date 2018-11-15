@@ -1,2 +1,10 @@
-TEEEST
+<h3> TEEEST</h3>
+{{#if content}}
+    {{content.items}}
+  {{#masonry-grid items=content customLayout=true gutter=10 as |item index grid|}}
+    {{#masonry-item item=item grid=grid class="box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3"}}
+      {{item.username}}
+    {{/masonry-item}}
+  {{/masonry-grid}}
+{{/if}}
 {{outlet}}
