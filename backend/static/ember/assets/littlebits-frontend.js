@@ -2087,7 +2087,8 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
       });
     },*/
     model: function model(params) {
-      return this.store.findAll('profile');
+      console.log(params.profile);
+      return this.store.findRecord('profile', params.profile);
     },
     setupController: function setupController(controller, model) {
       controller.set('content', model);
@@ -2328,7 +2329,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "7Lr9BXtt", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[6,[\"each\"],[[28,[\"model\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,[\"profile\",\"id\"]],false],[0,\"\\n\"]],\"locals\":[\"profile\"]},null],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,[\"content\",\"items\"]],false],[0,\"\\n\"],[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[0,\"      \"],[1,[28,[\"item\",\"username\"]],false],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},null],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "Td2L08er", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[1,[28,[\"model\",\"id\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"user\",\"username\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"commstatus\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"description\"]],false],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';
@@ -2534,6 +2535,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+ccd22fab"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+be7efb09"});
 }
 //# sourceMappingURL=littlebits-frontend.map

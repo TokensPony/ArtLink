@@ -30,7 +30,8 @@ export default Ember.Route.extend({
     });
   },*/
 	model(params) {
-    return this.store.findAll('profile');
+		console.log(params.profile);
+    return this.store.findRecord('profile', params.profile);
 	},
   setupController(controller, model){
     controller.set('content', model)
