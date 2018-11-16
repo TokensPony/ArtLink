@@ -2,6 +2,16 @@
 
 
 
+define('littlebits-frontend/adapters/application', ['exports', 'ember-data'], function (exports, _emberData) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.default = _emberData.default.JSONAPIAdapter.extend({
+        namespace: 'api'
+    });
+});
 define('littlebits-frontend/app', ['exports', 'littlebits-frontend/resolver', 'ember-load-initializers', 'littlebits-frontend/config/environment'], function (exports, _resolver, _emberLoadInitializers, _environment) {
   'use strict';
 
@@ -1895,6 +1905,35 @@ define('littlebits-frontend/mixins/active-link', ['exports', 'ember-cli-active-l
   });
   exports.default = _activeLink.default;
 });
+define('littlebits-frontend/models/profile', ['exports', 'ember-data'], function (exports, _emberData) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.default = _emberData.default.Model.extend({
+        user: _emberData.default.belongsTo('user'),
+        commstatus: _emberData.default.attr('string'),
+        description: _emberData.default.attr('string'),
+        artstyle: _emberData.default.attr('string'),
+        willdraw: _emberData.default.attr('string'),
+        wontdraw: _emberData.default.attr('string')
+    });
+});
+define('littlebits-frontend/models/user', ['exports', 'ember-data'], function (exports, _emberData) {
+    'use strict';
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.default = _emberData.default.Model.extend({
+        username: _emberData.default.attr('string'),
+        firstName: _emberData.default.attr('string'),
+        lastName: _emberData.default.attr('string'),
+        email: _emberData.default.attr('string'),
+        profile: _emberData.default.belongsTo('profile')
+    });
+});
 define('littlebits-frontend/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
   'use strict';
 
@@ -1958,35 +1997,34 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
   }]);
 
   exports.default = Ember.Route.extend({
-    getData: function getData() {
+    /*getData(){
       var items = Ember.A([]);
-      return Ember.$.get('/api/profiles/').then(function (events) {
-        events.forEach(function (event) {
+      return Ember.$.get('/api/profiles/').then(function(events){
+        events.forEach(function(event){
           // console.log(event);
           var uName = event.user.username;
           var picLink = 'img/no-image.jpg';
-          if (uName == "Typhlosion95") {
+          if(uName == "Typhlosion95"){
             picLink = 'img/typhlosion95.jpg';
           }
           items.addObject({
             id: event.id,
             username: event.user.username,
-            commstatus: event.commstatus,
-            description: event.description,
+          commstatus: event.commstatus,
+          description: event.description,
             user: event.user,
             img: picLink,
             link_external: '/api/profiles/' + event.user.id
           });
         });
-        return items.reverse();
-      }, function (msg) {
-        //error
+        return items.reverse()
+      }, function(msg){//error
         console.log('Error loading events:');
         console.log(msg.statusText);
       });
-    },
+    },*/
     model: function model() {
-      return this.getData();
+      return this.store.findAll('profile');
     },
     setupController: function setupController(controller, model) {
       this._super(controller, model);
@@ -2020,38 +2058,36 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
     value: true
   });
   exports.default = Ember.Route.extend({
-    getData: function getData() {
+    /*getData(){
       console.log(arguments[0]);
       var items = Ember.A([]);
-      return Ember.$.get('/api/profiles/' + arguments[0]).then(function (events) {
-        events.forEach(function (event) {
+      return Ember.$.get('/api/profiles/' + arguments[0]).then(function(events){
+        events.forEach(function(event){
           // console.log(event);
           var uName = event.user.username;
           var picLink = 'img/no-image.jpg';
-          if (uName == "Typhlosion95") {
+          if(uName == "Typhlosion95"){
             picLink = 'img/typhlosion95.jpg';
           }
           items.addObject({
             id: event.user.id,
             username: event.user.username,
-            commstatus: event.commstatus,
-            description: event.description,
+          commstatus: event.commstatus,
+          description: event.description,
             user: event.user,
             img: picLink,
             link_external: '/api/profiles/' + event.user.id
           });
         });
         console.log(items);
-        return items.reverse();
-      }, function (msg) {
-        //error
+        return items.reverse()
+      }, function(msg){//error
         console.log('Error loading events:');
         console.log(msg.statusText);
       });
-    },
+    },*/
     model: function model(params) {
-      console.log(params.profile);
-      return this.getData(params.profile);
+      return this.store.findAll('profile');
     },
     setupController: function setupController(controller, model) {
       controller.set('content', model);
@@ -2276,7 +2312,7 @@ define("littlebits-frontend/templates/index", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "koEJqbs2", "block": "{\"statements\":[[4,\"   *** PORTFOLIO ***\"],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\"],[0,\"\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"User: \"],[1,[28,[\"item\",\"username\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"Comm Status: \"],[1,[28,[\"item\",\"commstatus\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"defaultitems\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-5 col-lg-5\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h4\",[]],[13],[0,\" \"],[11,\"a\",[]],[15,\"href\",\"#\"],[13],[1,[28,[\"item\",\"title\"]],false],[14],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]}],[0,\"\\n\"],[4,\"   *** PORTFOLIO END ***\\n\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/index.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "o2CwClmB", "block": "{\"statements\":[[4,\"   *** PORTFOLIO ***\"],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\"],[0,\"\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"User: \"],[1,[28,[\"item\",\"user\",\"username\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"Comm Status: \"],[1,[28,[\"item\",\"commstatus\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"defaultitems\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-5 col-lg-5\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h4\",[]],[13],[0,\" \"],[11,\"a\",[]],[15,\"href\",\"#\"],[13],[1,[28,[\"item\",\"title\"]],false],[14],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]}],[0,\"\\n\"],[4,\"   *** PORTFOLIO END ***\\n\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/index.hbs" } });
 });
 define("littlebits-frontend/templates/login", ["exports"], function (exports) {
   "use strict";
@@ -2292,7 +2328,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "dya9D90+", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,[\"content\",\"items\"]],false],[0,\"\\n\"],[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[0,\"      \"],[1,[28,[\"item\",\"username\"]],false],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},null],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "7Lr9BXtt", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[6,[\"each\"],[[28,[\"model\"]]],null,{\"statements\":[[0,\"  \"],[1,[28,[\"profile\",\"id\"]],false],[0,\"\\n\"]],\"locals\":[\"profile\"]},null],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[0,\"    \"],[1,[28,[\"content\",\"items\"]],false],[0,\"\\n\"],[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[0,\"      \"],[1,[28,[\"item\",\"username\"]],false],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},null],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';
@@ -2498,6 +2534,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+df2fb35c"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+ccd22fab"});
 }
 //# sourceMappingURL=littlebits-frontend.map

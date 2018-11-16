@@ -5,6 +5,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.module('ESLint | app');
 
+  QUnit.test('adapters/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'adapters/application.js should pass ESLint\n\n');
+  });
+
   QUnit.test('app.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'app.js should pass ESLint\n\n');
@@ -45,6 +50,16 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
     assert.ok(true, 'initializers/constants.js should pass ESLint\n\n');
   });
 
+  QUnit.test('models/profile.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/profile.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('models/user.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'models/user.js should pass ESLint\n\n');
+  });
+
   QUnit.test('resolver.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'resolver.js should pass ESLint\n\n');
@@ -62,7 +77,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/index.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/index.js should pass ESLint\n\n37:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n38:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n46:7 - Unexpected console statement. (no-console)\n47:7 - Unexpected console statement. (no-console)');
+    assert.ok(true, 'routes/index.js should pass ESLint\n\n');
   });
 
   QUnit.test('routes/login.js', function (assert) {
@@ -72,7 +87,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/profile.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/profile.js should pass ESLint\n\n5:5 - Unexpected console statement. (no-console)\n18:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n19:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n25:7 - Unexpected console statement. (no-console)\n28:7 - Unexpected console statement. (no-console)\n29:7 - Unexpected console statement. (no-console)\n33:5 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'routes/profile.js should pass ESLint\n\n32:8 - \'params\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('services/auth-manager.js', function (assert) {
@@ -199,6 +214,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
     assert.ok(true, 'test-helper.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/adapters/application-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/adapters/application-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/controllers/application-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/controllers/application-test.js should pass ESLint\n\n');
@@ -229,6 +249,16 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/initializers/constants-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/models/profile-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/profile-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/models/user-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/models/user-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/routes/createaccount-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/createaccount-test.js should pass ESLint\n\n');
@@ -257,6 +287,20 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
   QUnit.test('unit/services/constants-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/services/constants-test.js should pass ESLint\n\n');
+  });
+});
+define('littlebits-frontend/tests/unit/adapters/application-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('adapter:application', 'Unit | Adapter | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['serializer:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var adapter = this.subject();
+    assert.ok(adapter);
   });
 });
 define('littlebits-frontend/tests/unit/controllers/application-test', ['ember-qunit'], function (_emberQunit) {
@@ -363,6 +407,34 @@ define('littlebits-frontend/tests/unit/initializers/constants-test', ['littlebit
 
     // you would normally confirm the results of the initializer here
     assert.ok(true);
+  });
+});
+define('littlebits-frontend/tests/unit/models/profile-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForModel)('profile', 'Unit | Model | profile', {
+    // Specify the other units that are required for this test.
+    needs: []
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var model = this.subject();
+    // let store = this.store();
+    assert.ok(!!model);
+  });
+});
+define('littlebits-frontend/tests/unit/models/user-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleForModel)('user', 'Unit | Model | user', {
+    // Specify the other units that are required for this test.
+    needs: []
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var model = this.subject();
+    // let store = this.store();
+    assert.ok(!!model);
   });
 });
 define('littlebits-frontend/tests/unit/routes/createaccount-test', ['ember-qunit'], function (_emberQunit) {

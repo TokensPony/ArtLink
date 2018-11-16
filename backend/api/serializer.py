@@ -7,18 +7,16 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ('id', 'username', 'first_name', 'last_name', 'email')
 
 class ProfileSerializer(serializers.ModelSerializer):
-    user = UserSerializer(required=True)
+    user = UserSerializer(read_only=True)
 
     class Meta:
         model = Profile
         fields = ('id', 'user', 'commstatus', 'description', 'artstyle', 'willdraw', 'wontdraw')
 
-    def create(self, validated_data):
-        """
-        Overriding the default create method of the Model serializer.
-        :param validated_data: data containing all the details of student
-        :return: returns a successfully created student record
-        """
+    class JSONAPIMeta:
+        included_resources = ['user']
+
+    """def create(self, validated_data):
         user_data = validated_data.pop('user')
         user = UserSerializer.create(UserSerializer(), validated_data=user_data)
         profile, created = Profile.objects.update_or_create(user=user,
@@ -28,6 +26,7 @@ class ProfileSerializer(serializers.ModelSerializer):
                             willdraw=validated_data.pop('willdraw'),
                             wontdraw=validated_data.pop('wontdraw'))
         return profile
+        """
 
 class CommissionSerializer(serializers.ModelSerializer):
     user = UserSerializer(required=True)

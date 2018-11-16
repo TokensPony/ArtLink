@@ -21,7 +21,7 @@ var defaultitems = Ember.A([
 ]);
 
 export default Ember.Route.extend({
-  getData(){
+  /*getData(){
     var items = Ember.A([]);
     return Ember.$.get('/api/profiles/').then(function(events){
       events.forEach(function(event){
@@ -46,9 +46,9 @@ export default Ember.Route.extend({
       console.log('Error loading events:');
       console.log(msg.statusText);
     });
-  },
+  },*/
 	model() {
-    return this.getData();
+    return this.store.findAll('profile');
 	},
   setupController(controller, model){
     this._super(controller, model);

@@ -1,4 +1,7 @@
 <h3> TEEEST</h3>
+{{#each model as |profile|}}
+  {{profile.id}}
+{{/each}}
 {{#if content}}
     {{content.items}}
   {{#masonry-grid items=content customLayout=true gutter=10 as |item index grid|}}

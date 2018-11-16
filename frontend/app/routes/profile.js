@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
-  getData(){
+  /*getData(){
     console.log(arguments[0]);
     var items = Ember.A([]);
     return Ember.$.get('/api/profiles/' + arguments[0]).then(function(events){
@@ -28,10 +28,9 @@ export default Ember.Route.extend({
       console.log('Error loading events:');
       console.log(msg.statusText);
     });
-  },
+  },*/
 	model(params) {
-    console.log(params.profile);
-    return this.getData(params.profile);
+    return this.store.findAll('profile');
 	},
   setupController(controller, model){
     controller.set('content', model)

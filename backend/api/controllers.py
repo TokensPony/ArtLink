@@ -188,6 +188,7 @@ class EventDetail(APIView):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 #Profiles
+'''
 class Profiles(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
@@ -262,6 +263,12 @@ class ProfileDetail(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+'''
+
+class ProfileViewSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
 
 class Commissions(APIView):
     permission_classes = (AllowAny,)
@@ -345,11 +352,6 @@ class CommissionDetail(APIView):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-'''class ProfileViewSet(viewsets.ModelViewSet):
-    queryset = Profile.objects.all()
-    serializer_class = ProfileSerializer
-'''
 
 
 class ActivateIFTTT(APIView):

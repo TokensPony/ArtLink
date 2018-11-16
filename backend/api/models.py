@@ -27,7 +27,7 @@ class EventAdmin(admin.ModelAdmin):
     list_display = ('eventtype', 'timestamp')
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = 'profile')
     commstatus = models.CharField(max_length=1000, blank=False, default = '')
     description = models.TextField(max_length=1000, blank=False, default = '')
     artstyle = models.CharField(max_length=1000, blank=False, default = '')
@@ -36,6 +36,9 @@ class Profile(models.Model):
 
     def __str__(self):
         return str(self.user)
+
+    class JSONAPIMeta:
+        resource_name = "profiles"
 
 '''
 @receiver(post_save, sender=User)
