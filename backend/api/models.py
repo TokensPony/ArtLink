@@ -33,6 +33,7 @@ class Profile(models.Model):
     artstyle = models.CharField(max_length=1000, blank=False, default = '')
     willdraw = models.CharField(max_length=1000, blank=False, default = '')
     wontdraw = models.CharField(max_length=1000, blank=False, default = '')
+    img = models.CharField(max_length=1000, blank=False, default = 'img/no-image.jpg')
 
     def __str__(self):
         return str(self.user)

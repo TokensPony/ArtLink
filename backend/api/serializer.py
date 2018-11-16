@@ -11,7 +11,7 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
-        fields = ('id', 'user', 'commstatus', 'description', 'artstyle', 'willdraw', 'wontdraw')
+        fields = ('id', 'user', 'commstatus', 'description', 'artstyle', 'willdraw', 'wontdraw', 'img')
 
     class JSONAPIMeta:
         included_resources = ['user']

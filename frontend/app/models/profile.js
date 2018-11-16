@@ -7,4 +7,7 @@ export default DS.Model.extend({
     artstyle: DS.attr('string'),
     willdraw: DS.attr('string'),
     wontdraw: DS.attr('string'),
+    img: DS.attr('string', {
+      defaultValue() { return 'img/no-image.jpg'; }
+    })
 });
