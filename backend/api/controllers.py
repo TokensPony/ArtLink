@@ -270,6 +270,11 @@ class ProfileViewSet(viewsets.ModelViewSet):
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
+class CommissionViewSet(viewsets.ModelViewSet):
+    permission_classes = (AllowAny,)
+    queryset = Commission.objects.all()
+    serializer_class = CommissionSerializer
+'''
 class Commissions(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,parsers.FormParser)
@@ -340,19 +345,12 @@ class CommissionDetail(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        '''
-        commission = self.get_object(pk)
-        json_data = serializers.serialize('json', [commission, ])
-        #json_data = ProfileSerializer('json', profiles)
-        content = {'commission': json_data}
-        return HttpResponse(json_data, content_type='json')
-        '''
 
     def delete(self, request, pk, format=None):
         snippet = self.get_object(pk)
         snippet.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
+'''
 
 class ActivateIFTTT(APIView):
     permission_classes = (AllowAny,)

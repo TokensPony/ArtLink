@@ -66,6 +66,9 @@ class Commission(models.Model):
     def __str__(self):
         return str(self.user) + str(self.commtype)
 
+    class JSONAPIMeta:
+        resource_name = "commissions"
+
 class CommissionAdmin(admin.ModelAdmin):
     list_display = ('user', 'commtype')
 
