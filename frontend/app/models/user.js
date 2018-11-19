@@ -5,5 +5,6 @@ export default DS.Model.extend({
     firstName: DS.attr('string'),
     lastName : DS.attr('string'),
     email: DS.attr('string'),
-    profile: DS.belongsTo('profile')
+    profile: DS.belongsTo('profile'),
+    commissions: DS.hasMany('commission')
 });

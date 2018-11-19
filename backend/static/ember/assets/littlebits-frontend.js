@@ -1905,6 +1905,21 @@ define('littlebits-frontend/mixins/active-link', ['exports', 'ember-cli-active-l
   });
   exports.default = _activeLink.default;
 });
+define('littlebits-frontend/models/commission', ['exports', 'ember-data'], function (exports, _emberData) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = _emberData.default.Model.extend({
+    user: _emberData.default.belongsTo('user'),
+    commtype: _emberData.default.attr('string'),
+    description: _emberData.default.attr('string'),
+    price_min: _emberData.default.attr('number'),
+    price_max: _emberData.default.attr('number'),
+    slots: _emberData.default.attr('number')
+  });
+});
 define('littlebits-frontend/models/profile', ['exports', 'ember-data'], function (exports, _emberData) {
     'use strict';
 
@@ -1936,7 +1951,8 @@ define('littlebits-frontend/models/user', ['exports', 'ember-data'], function (e
         firstName: _emberData.default.attr('string'),
         lastName: _emberData.default.attr('string'),
         email: _emberData.default.attr('string'),
-        profile: _emberData.default.belongsTo('profile')
+        profile: _emberData.default.belongsTo('profile'),
+        commissions: _emberData.default.hasMany('commission')
     });
 });
 define('littlebits-frontend/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
@@ -1967,9 +1983,18 @@ define('littlebits-frontend/router', ['exports', 'littlebits-frontend/config/env
     this.route('profile', {
       path: '/:profile'
     }, function () {});
+    this.route('commissions');
   });
 
   exports.default = Router;
+});
+define('littlebits-frontend/routes/commissions', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Route.extend({});
 });
 define('littlebits-frontend/routes/createaccount', ['exports'], function (exports) {
   'use strict';
@@ -2030,21 +2055,25 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
     },*/
     model: function model() {
       return this.store.findAll('profile');
+      /*return this.store.findAll('profile').then(function(list){
+        return list.filterBy("user", 9);
+      });*/
+      //return this.store.queryRecord('profile', {filter: {user : 9}})
     },
     setupController: function setupController(controller, model) {
       this._super(controller, model);
       controller.set('defaultitems', defaultitems);
       var route = this;
-      setInterval(Ember.run.later(route, function () {
+      /*setInterval(Ember.run.later(route, function() {
         // code here will execute within a RunLoop about every minute
-        if (controller.get('auth.isLoggedIn')) {
-          route.getData().then(function (data) {
-            if (data[0].id != controller.get('content')[0].id) {
+        if(controller.get('auth.isLoggedIn')){
+          route.getData().then(function(data){
+            if(data[0].id!=controller.get('content')[0].id){
               controller.get('content').insertAt(0, data[0]);
             }
           });
         }
-      }, 5), 3000);
+      }, 5), 3000);*/
     }
   });
 });
@@ -2093,7 +2122,10 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
     },*/
     model: function model(params) {
       console.log(params.profile);
-      return this.store.findRecord('profile', params.profile);
+      var profiles = this.store.findRecord('profile', params.profile);
+      console.log(profiles.get("commstatus"));
+      return profiles;
+      //return this.store.query('profile', {user: params.profile});
     },
     setupController: function setupController(controller, model) {
       controller.set('content', model);
@@ -2278,6 +2310,14 @@ define("littlebits-frontend/templates/application", ["exports"], function (expor
   });
   exports.default = Ember.HTMLBars.template({ "id": "8msa10Ga", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"container-fluid\"],[15,\"id\",\"app-main\"],[13],[0,\"\\n\\t\"],[11,\"div\",[]],[16,\"class\",[34,[\"row row-offcanvas row-offcanvas-left \",[26,[\"showMenu\"]]]]],[13],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR ***\"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"id\",\"sidebar\"],[15,\"class\",\"col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"sidebar-content\"],[13],[0,\"\\n\"],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"\\t\\t\\t\\t    \"],[11,\"p\",[]],[15,\"class\",\"sidebar-p\"],[13],[11,\"h4\",[]],[13],[0,\"ArtLink\"],[14],[14],[0,\"\\n\"]],\"locals\":[]},null],[0,\"\\n\\n\\t\\t\\t\\t\"],[11,\"ul\",[]],[15,\"class\",\"sidebar-menu\"],[13],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"auth\",\"isLoggedIn\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\tLogged in as: \"],[1,[28,[\"auth\",\"username\"]],false],[0,\" (\"],[11,\"a\",[]],[5,[\"action\"],[[28,[null]],\"logout\"]],[13],[0,\"Logout\"],[14],[0,\")\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"login\"],null,{\"statements\":[[0,\"Login\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"createaccount\"],null,{\"statements\":[[0,\"Create Account\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\"]],\"locals\":[]}],[0,\"\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"Home\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[4,\"<p class=\\\"social\\\">\\n\\t\\t\\t\\t\\t<a href=\\\"https://github.com/MLHale/\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-github\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://scholar.google.com/citations?user=YGtxqR4AAAAJ&hl\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-google\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://twitter.com/mlhale_\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"external twitter\\\"><i class=\\\"fa fa-twitter\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"mailto:mlhale@unomaha.edu\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"email\\\"><i class=\\\"fa fa-envelope\\\"></i></a></p>\"],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"copyright\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[15,\"class\",\"credit\"],[13],[0,\"©2018 Connor McCoy, Base code from Dr. Hale\"],[14],[0,\"\\n\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\n\"],[0,\"\\t\\t\"],[14],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR END ***  \"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"col-xs-12 col-sm-8 col-md-9 content-column\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"small-navbar visible-xs\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"button\",[]],[15,\"type\",\"button\"],[15,\"data-toggle\",\"offcanvas\"],[15,\"class\",\"btn btn-ghost pull-left\"],[5,[\"action\"],[[28,[null]],\"toggleMenu\"]],[13],[0,\" \"],[11,\"i\",[]],[15,\"class\",\"fa fa-align-left\"],[13],[0,\" \"],[14],[0,\"Menu\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h1\",[]],[15,\"class\",\"small-navbar-heading\"],[13],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"ArtLink\"]],\"locals\":[]},null],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[1,[33,[\"liquid-outlet\"],[\"main\"],null],false],[0,\"\\n\\t\\t\"],[14],[0,\"\\n\\t\"],[14],[0,\"\\n\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/application.hbs" } });
 });
+define("littlebits-frontend/templates/commissions", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "nmQEMw6Y", "block": "{\"statements\":[[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/commissions.hbs" } });
+});
 define('littlebits-frontend/templates/components/ember-popper-targeting-parent', ['exports', 'ember-popper/templates/components/ember-popper-targeting-parent'], function (exports, _emberPopperTargetingParent) {
   'use strict';
 
@@ -2318,7 +2358,7 @@ define("littlebits-frontend/templates/index", ["exports"], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "6TiCF5r7", "block": "{\"statements\":[[4,\"   *** PORTFOLIO ***\"],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"id\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[\"/\",[28,[\"item\",\"id\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\"],[0,\"\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"User: \"],[1,[28,[\"item\",\"user\",\"username\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"Comm Status: \"],[1,[28,[\"item\",\"commstatus\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"defaultitems\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-5 col-lg-5\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h4\",[]],[13],[0,\" \"],[11,\"a\",[]],[15,\"href\",\"#\"],[13],[1,[28,[\"item\",\"title\"]],false],[14],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]}],[0,\"\\n\"],[4,\"   *** PORTFOLIO END ***\\n\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/index.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "6dNrckWv", "block": "{\"statements\":[[4,\"   *** PORTFOLIO ***\"],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"content\"]]],null,{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"content\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"id\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[\"/\",[28,[\"item\",\"id\"]]]]],[15,\"target\",\"_self\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\"],[0,\"\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"User: \"],[1,[28,[\"item\",\"user\",\"username\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h5\",[]],[13],[0,\"Comm Status: \"],[1,[28,[\"item\",\"commstatus\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]},{\"statements\":[[6,[\"masonry-grid\"],null,[[\"items\",\"customLayout\",\"gutter\"],[[28,[\"defaultitems\"]],true,10]],{\"statements\":[[6,[\"masonry-item\"],null,[[\"item\",\"grid\",\"class\"],[[28,[\"item\"]],[28,[\"grid\"]],\"box-masonry col-xs-12 col-sm-6 col-md-5 col-lg-5\"]],{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link\"]]],null,{\"statements\":[[6,[\"link-to\"],[[28,[\"item\",\"link\"]]],[[\"class\"],[\"box-masonry-image with-hover-overlay with-hover-icon\"]],{\"statements\":[[0,\"\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[]},{\"statements\":[[6,[\"if\"],[[28,[\"item\",\"link_external\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"a\",[]],[16,\"href\",[34,[[28,[\"item\",\"link_external\"]]]]],[15,\"target\",\"_blank\"],[15,\"class\",\"box-masonry-image with-hover-overlay with-hover-icon\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"item\",\"img\"]]]]],[15,\"class\",\"img-responsive\"],[13],[14],[0,\"\\n\\t\\t\\t\"]],\"locals\":[]}]],\"locals\":[]}],[0,\"\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-text\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h4\",[]],[13],[0,\" \"],[11,\"a\",[]],[15,\"href\",\"#\"],[13],[1,[28,[\"item\",\"title\"]],false],[14],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"box-masonry-desription\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[13],[1,[28,[\"item\",\"description\"]],false],[14],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\"]],\"locals\":[]},null]],\"locals\":[\"item\",\"index\",\"grid\"]},null]],\"locals\":[]}],[0,\"\\n\"],[4,\"   *** PORTFOLIO END ***\\n\"],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/index.hbs" } });
 });
 define("littlebits-frontend/templates/login", ["exports"], function (exports) {
   "use strict";
@@ -2334,7 +2374,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "Td2L08er", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" TEEEST\"],[14],[0,\"\\n\"],[1,[28,[\"model\",\"id\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"user\",\"username\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"commstatus\"]],false],[0,\"\\n\"],[1,[28,[\"model\",\"description\"]],false],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "3WrXs7Vt", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" Profile\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileHeader\"],[13],[0,\"\\n  \"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"model\",\"img\"]]]]],[13],[14],[0,\"\\n  \"],[1,[28,[\"model\",\"user\",\"username\"]],false],[0,\"\\n\"],[14],[0,\"\\nCommission Status: \"],[1,[28,[\"model\",\"commstatus\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\nDescription: \"],[1,[28,[\"model\",\"description\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';
@@ -2540,6 +2580,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+9b20c8dc"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+fcfaf4a0"});
 }
 //# sourceMappingURL=littlebits-frontend.map

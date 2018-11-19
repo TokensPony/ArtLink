@@ -1,6 +1,8 @@
-<h3> TEEEST</h3>
-{{model.id}}
-{{model.user.username}}
-{{model.commstatus}}
-{{model.description}}
+<h3> Profile</h3>
+<div class="profileHeader">
+  <img src="{{constants.rootURL}}{{model.img}}">
+  {{model.user.username}}
+</div>
+Commission Status: {{model.commstatus}}<br>
+Description: {{model.description}}<br>
 {{outlet}}

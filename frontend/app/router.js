@@ -13,6 +13,7 @@ Router.map(function() {
   this.route('profile', {
     path: '/:profile'
   }, function() {});
+  this.route('commissions');
 });
 
 export default Router;

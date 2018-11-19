@@ -49,12 +49,16 @@ export default Ember.Route.extend({
   },*/
 	model() {
     return this.store.findAll('profile');
+    /*return this.store.findAll('profile').then(function(list){
+      return list.filterBy("user", 9);
+    });*/
+    //return this.store.queryRecord('profile', {filter: {user : 9}})
 	},
   setupController(controller, model){
     this._super(controller, model);
     controller.set('defaultitems', defaultitems);
     var route = this;
-    setInterval(Ember.run.later(route, function() {
+    /*setInterval(Ember.run.later(route, function() {
       // code here will execute within a RunLoop about every minute
       if(controller.get('auth.isLoggedIn')){
         route.getData().then(function(data){
@@ -63,6 +67,6 @@ export default Ember.Route.extend({
           }
         });
       }
-    }, 5), 3000);
+    }, 5), 3000);*/
   }
 });
