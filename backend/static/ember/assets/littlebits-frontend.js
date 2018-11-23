@@ -1994,7 +1994,10 @@ define('littlebits-frontend/routes/commissions', ['exports'], function (exports)
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Route.extend({});
+  exports.default = Ember.Route.extend({
+
+    //THIS NEEDS TO BE CHANGED TO SINGULAR COMMISSION
+  });
 });
 define('littlebits-frontend/routes/createaccount', ['exports'], function (exports) {
   'use strict';
@@ -2123,6 +2126,7 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
     model: function model(params) {
       console.log(params.profile);
       var profiles = this.store.findRecord('profile', params.profile);
+      //Included prameter
       console.log(profiles.get("commstatus"));
       return profiles;
       //return this.store.query('profile', {user: params.profile});
@@ -2261,9 +2265,9 @@ define('littlebits-frontend/services/auth-manager', ['exports'], function (expor
 			Ember.$.get('/api/session', function (response) {
 				if (response.data.isauthenticated) {
 					//success
-					console.log('The user: \'' + response.username + '\' is currently logged in.');
-					auth.set('username', response.username);
-					auth.set('userid', response.userid);
+					console.log('The user: \'' + response.data.username + '\' is currently logged in.');
+					auth.set('username', response.data.username);
+					auth.set('userid', response.data.userid);
 					auth.set('isLoggedIn', true);
 				} else {
 					//errors
@@ -2580,6 +2584,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+fcfaf4a0"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+5032a177"});
 }
 //# sourceMappingURL=littlebits-frontend.map

@@ -32,6 +32,7 @@ export default Ember.Route.extend({
 	model(params) {
 		console.log(params.profile);
     var profiles = this.store.findRecord('profile', params.profile);
+		//Included prameter
 		console.log(profiles.get("commstatus"));
 		return profiles;
 		//return this.store.query('profile', {user: params.profile});

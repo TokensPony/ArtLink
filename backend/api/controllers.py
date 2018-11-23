@@ -58,6 +58,7 @@ def xss_example(request):
 
 class Register(APIView):
     permission_classes = (AllowAny,)
+    parser_classes = (parsers.JSONParser,)
 
     def post(self, request, *args, **kwargs):
         # Login
