@@ -1,8 +1,23 @@
-<h3> Profile</h3>
+<h2> Profile</h2>
 <div class="profileHeader">
   <img src="{{constants.rootURL}}{{model.img}}">
-  {{model.user.username}}
+  <b>{{model.user.username}}</b>   Name: {{model.user.first_name}}
 </div>
-Commission Status: {{model.commstatus}}<br>
-Description: {{model.description}}<br>
+<div class = "profileDetails">
+<b>Commission Status:</b> {{model.commstatus}}<br>
+<b>Description:</b> {{model.description}}<br><br>
+</div>
+
+<h4>Commission Types</h4>
+<table style="width:100%">
+  {{#each model.commissions as |commission|}}
+    <tr>
+      <td>
+        <b>{{commission.commtype}}:</b> ${{commission.price_min}} - ${{commission.price_max}}<br>
+        <b>Slots:</b> {{commission.slots}}<br>
+        {{commission.description}}<br><br>
+      </td>
+    </tr>
+  {{/each}}
+</table>
 {{outlet}}

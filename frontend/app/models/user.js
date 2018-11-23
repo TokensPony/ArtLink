@@ -2,9 +2,8 @@ import DS from 'ember-data';
 
 export default DS.Model.extend({
     username: DS.attr('string'),
-    firstName: DS.attr('string'),
-    lastName : DS.attr('string'),
+    first_name: DS.attr('string'),
+    last_name : DS.attr('string'),
     email: DS.attr('string'),
-    profile: DS.belongsTo('profile'),
-    commissions: DS.hasMany('commission')
+    profile: DS.belongsTo('profile')
 });

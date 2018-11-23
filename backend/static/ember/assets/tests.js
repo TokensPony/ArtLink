@@ -100,6 +100,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
     assert.ok(false, 'routes/profile.js should pass ESLint\n\n33:3 - Unexpected console statement. (no-console)\n36:3 - Unexpected console statement. (no-console)');
   });
 
+  QUnit.test('serializers/application.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'serializers/application.js should pass ESLint\n\n2:16 - \'DS\' is not defined. (no-undef)\n4:16 - \'Ember\' is not defined. (no-undef)\n8:16 - \'Ember\' is not defined. (no-undef)');
+  });
+
   QUnit.test('services/auth-manager.js', function (assert) {
     assert.expect(1);
     assert.ok(false, 'services/auth-manager.js should pass ESLint\n\n19:3 - Unexpected console statement. (no-console)\n55:9 - Unexpected console statement. (no-console)\n60:5 - Unexpected console statement. (no-console)\n67:3 - Unexpected console statement. (no-console)\n71:5 - Unexpected console statement. (no-console)\n108:5 - Unexpected console statement. (no-console)\n114:5 - Unexpected console statement. (no-console)');

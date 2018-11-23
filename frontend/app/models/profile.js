@@ -9,5 +9,6 @@ export default DS.Model.extend({
     wontdraw: DS.attr('string'),
     img: DS.attr('string', {
       defaultValue() { return 'img/no-image.jpg'; }
-    })
+    }),
+    commissions: DS.hasMany('commission') 
 });

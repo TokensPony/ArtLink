@@ -1912,7 +1912,7 @@ define('littlebits-frontend/models/commission', ['exports', 'ember-data'], funct
     value: true
   });
   exports.default = _emberData.default.Model.extend({
-    user: _emberData.default.belongsTo('user'),
+    profile: _emberData.default.belongsTo('profile'),
     commtype: _emberData.default.attr('string'),
     description: _emberData.default.attr('string'),
     price_min: _emberData.default.attr('number'),
@@ -1937,7 +1937,8 @@ define('littlebits-frontend/models/profile', ['exports', 'ember-data'], function
             defaultValue: function defaultValue() {
                 return 'img/no-image.jpg';
             }
-        })
+        }),
+        commissions: _emberData.default.hasMany('commission')
     });
 });
 define('littlebits-frontend/models/user', ['exports', 'ember-data'], function (exports, _emberData) {
@@ -1948,11 +1949,10 @@ define('littlebits-frontend/models/user', ['exports', 'ember-data'], function (e
     });
     exports.default = _emberData.default.Model.extend({
         username: _emberData.default.attr('string'),
-        firstName: _emberData.default.attr('string'),
-        lastName: _emberData.default.attr('string'),
+        first_name: _emberData.default.attr('string'),
+        last_name: _emberData.default.attr('string'),
         email: _emberData.default.attr('string'),
-        profile: _emberData.default.belongsTo('profile'),
-        commissions: _emberData.default.hasMany('commission')
+        profile: _emberData.default.belongsTo('profile')
     });
 });
 define('littlebits-frontend/resolver', ['exports', 'ember-resolver'], function (exports, _emberResolver) {
@@ -2148,6 +2148,22 @@ define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
       }, 5), 3000);*/
     }
   });
+});
+define("littlebits-frontend/serializers/application", ["exports"], function (exports) {
+    "use strict";
+
+    Object.defineProperty(exports, "__esModule", {
+        value: true
+    });
+    exports.default = DS.JSONAPISerializer.extend({
+        keyForAttribute: function keyForAttribute(key) {
+            return Ember.String.decamelize(key);
+        },
+
+        keyForRelationship: function keyForRelationship(key) {
+            return Ember.String.decamelize(key);
+        }
+    });
 });
 define('littlebits-frontend/services/ajax', ['exports', 'ember-ajax/services/ajax'], function (exports, _ajax) {
   'use strict';
@@ -2378,7 +2394,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "3WrXs7Vt", "block": "{\"statements\":[[11,\"h3\",[]],[13],[0,\" Profile\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileHeader\"],[13],[0,\"\\n  \"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"model\",\"img\"]]]]],[13],[14],[0,\"\\n  \"],[1,[28,[\"model\",\"user\",\"username\"]],false],[0,\"\\n\"],[14],[0,\"\\nCommission Status: \"],[1,[28,[\"model\",\"commstatus\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\nDescription: \"],[1,[28,[\"model\",\"description\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "eLgeki+S", "block": "{\"statements\":[[11,\"h2\",[]],[13],[0,\" Profile\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileHeader\"],[13],[0,\"\\n  \"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"model\",\"img\"]]]]],[13],[14],[0,\"\\n  \"],[11,\"b\",[]],[13],[1,[28,[\"model\",\"user\",\"username\"]],false],[14],[0,\"   Name: \"],[1,[28,[\"model\",\"user\",\"first_name\"]],false],[0,\"\\n\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileDetails\"],[13],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Commission Status:\"],[14],[0,\" \"],[1,[28,[\"model\",\"commstatus\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Description:\"],[14],[0,\" \"],[1,[28,[\"model\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[14],[0,\"\\n\\n\"],[11,\"h4\",[]],[13],[0,\"Commission Types\"],[14],[0,\"\\n\"],[11,\"table\",[]],[15,\"style\",\"width:100%\"],[13],[0,\"\\n\"],[6,[\"each\"],[[28,[\"model\",\"commissions\"]]],null,{\"statements\":[[0,\"    \"],[11,\"tr\",[]],[13],[0,\"\\n      \"],[11,\"td\",[]],[13],[0,\"\\n        \"],[11,\"b\",[]],[13],[1,[28,[\"commission\",\"commtype\"]],false],[0,\":\"],[14],[0,\" $\"],[1,[28,[\"commission\",\"price_min\"]],false],[0,\" - $\"],[1,[28,[\"commission\",\"price_max\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[11,\"b\",[]],[13],[0,\"Slots:\"],[14],[0,\" \"],[1,[28,[\"commission\",\"slots\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[1,[28,[\"commission\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n      \"],[14],[0,\"\\n    \"],[14],[0,\"\\n\"]],\"locals\":[\"commission\"]},null],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';

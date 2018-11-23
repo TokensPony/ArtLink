@@ -56,7 +56,7 @@ class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user',)
 
 class Commission(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE,  related_name = 'commissions')
     commtype = models.CharField(max_length=1000, blank=True)
     description = models.TextField(max_length=1000, blank=True)
     price_min = models.DecimalField(max_digits=5, decimal_places=2, blank=True)
@@ -64,13 +64,13 @@ class Commission(models.Model):
     slots = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(99)], blank=True)
 
     def __str__(self):
-        return str(self.user) + str(self.commtype)
+        return str(self.profile) + str(self.commtype)
 
     class JSONAPIMeta:
         resource_name = "commissions"
 
 class CommissionAdmin(admin.ModelAdmin):
-    list_display = ('user', 'commtype')
+    list_display = ('profile', 'commtype')
 
 class ApiKey(models.Model):
     owner = models.CharField(max_length=1000, blank=False)
