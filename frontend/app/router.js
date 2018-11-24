@@ -14,6 +14,7 @@ Router.map(function() {
     path: '/:profile'
   }, function() {});
   this.route('commissions');
+  this.route('create-commission');
 });
 
 export default Router;

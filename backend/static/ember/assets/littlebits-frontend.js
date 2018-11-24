@@ -1122,6 +1122,25 @@ define('littlebits-frontend/controllers/application', ['exports'], function (exp
     }
   });
 });
+define('littlebits-frontend/controllers/create-commission', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Controller.extend({
+    form: Ember.computed(function () {
+      return {
+        profile: '',
+        commtype: '',
+        description: '',
+        price_min: '',
+        price_max: '',
+        slots: ''
+      };
+    })
+  });
+});
 define('littlebits-frontend/controllers/createaccount', ['exports'], function (exports) {
   'use strict';
 
@@ -1984,6 +2003,7 @@ define('littlebits-frontend/router', ['exports', 'littlebits-frontend/config/env
       path: '/:profile'
     }, function () {});
     this.route('commissions');
+    this.route('create-commission');
   });
 
   exports.default = Router;
@@ -1997,6 +2017,57 @@ define('littlebits-frontend/routes/commissions', ['exports'], function (exports)
   exports.default = Ember.Route.extend({
 
     //THIS NEEDS TO BE CHANGED TO SINGULAR COMMISSION
+  });
+});
+define('littlebits-frontend/routes/create-commission', ['exports'], function (exports) {
+  'use strict';
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.Route.extend({
+    store: Ember.inject.service(),
+
+    setupController: function setupController(controller, model) {
+      this._super(controller, model);
+      this.controller.set('form.profile', '');
+      this.controller.set('form.commtype', '');
+      this.controller.set('form.description', '');
+      this.controller.set('form.price_min', '');
+      this.controller.set('form.price_max', '');
+      this.controller.set('form.slots', '');
+    },
+
+
+    actions: {
+      create: function create() {
+        var _this = this;
+
+        var form = this.controller.get('form');
+        var store = this.get('store');
+        var profileData = this.store.find('profile', 1);
+        /*this.store.find('profile', 1).then(function(profile) {
+          newCommission.set('profile', profile);
+        });*/
+        var newCommission = store.createRecord('commission', {
+          profile: profileData,
+          commtype: form.commtype,
+          description: form.description,
+          price_min: form.price_min,
+          price_max: form.price_max,
+          slots: form.slots
+        });
+
+        newCommission.get('id');
+
+        newCommission.save().then(function () {
+          _this.transitionTo('index');
+        });
+      },
+      cancel: function cancel() {
+        this.transitionTo('index');
+      }
+    }
   });
 });
 define('littlebits-frontend/routes/createaccount', ['exports'], function (exports) {
@@ -2328,7 +2399,7 @@ define("littlebits-frontend/templates/application", ["exports"], function (expor
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "8msa10Ga", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"container-fluid\"],[15,\"id\",\"app-main\"],[13],[0,\"\\n\\t\"],[11,\"div\",[]],[16,\"class\",[34,[\"row row-offcanvas row-offcanvas-left \",[26,[\"showMenu\"]]]]],[13],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR ***\"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"id\",\"sidebar\"],[15,\"class\",\"col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"sidebar-content\"],[13],[0,\"\\n\"],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"\\t\\t\\t\\t    \"],[11,\"p\",[]],[15,\"class\",\"sidebar-p\"],[13],[11,\"h4\",[]],[13],[0,\"ArtLink\"],[14],[14],[0,\"\\n\"]],\"locals\":[]},null],[0,\"\\n\\n\\t\\t\\t\\t\"],[11,\"ul\",[]],[15,\"class\",\"sidebar-menu\"],[13],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"auth\",\"isLoggedIn\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\tLogged in as: \"],[1,[28,[\"auth\",\"username\"]],false],[0,\" (\"],[11,\"a\",[]],[5,[\"action\"],[[28,[null]],\"logout\"]],[13],[0,\"Logout\"],[14],[0,\")\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"login\"],null,{\"statements\":[[0,\"Login\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"createaccount\"],null,{\"statements\":[[0,\"Create Account\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\"]],\"locals\":[]}],[0,\"\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"Home\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[4,\"<p class=\\\"social\\\">\\n\\t\\t\\t\\t\\t<a href=\\\"https://github.com/MLHale/\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-github\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://scholar.google.com/citations?user=YGtxqR4AAAAJ&hl\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-google\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://twitter.com/mlhale_\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"external twitter\\\"><i class=\\\"fa fa-twitter\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"mailto:mlhale@unomaha.edu\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"email\\\"><i class=\\\"fa fa-envelope\\\"></i></a></p>\"],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"copyright\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[15,\"class\",\"credit\"],[13],[0,\"©2018 Connor McCoy, Base code from Dr. Hale\"],[14],[0,\"\\n\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\n\"],[0,\"\\t\\t\"],[14],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR END ***  \"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"col-xs-12 col-sm-8 col-md-9 content-column\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"small-navbar visible-xs\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"button\",[]],[15,\"type\",\"button\"],[15,\"data-toggle\",\"offcanvas\"],[15,\"class\",\"btn btn-ghost pull-left\"],[5,[\"action\"],[[28,[null]],\"toggleMenu\"]],[13],[0,\" \"],[11,\"i\",[]],[15,\"class\",\"fa fa-align-left\"],[13],[0,\" \"],[14],[0,\"Menu\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h1\",[]],[15,\"class\",\"small-navbar-heading\"],[13],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"ArtLink\"]],\"locals\":[]},null],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[1,[33,[\"liquid-outlet\"],[\"main\"],null],false],[0,\"\\n\\t\\t\"],[14],[0,\"\\n\\t\"],[14],[0,\"\\n\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/application.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "RyJh3IbH", "block": "{\"statements\":[[11,\"div\",[]],[15,\"class\",\"container-fluid\"],[15,\"id\",\"app-main\"],[13],[0,\"\\n\\t\"],[11,\"div\",[]],[16,\"class\",[34,[\"row row-offcanvas row-offcanvas-left \",[26,[\"showMenu\"]]]]],[13],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR ***\"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"id\",\"sidebar\"],[15,\"class\",\"col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"sidebar-content\"],[13],[0,\"\\n\"],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"\\t\\t\\t\\t    \"],[11,\"p\",[]],[15,\"class\",\"sidebar-p\"],[13],[11,\"h4\",[]],[13],[0,\"ArtLink\"],[14],[14],[0,\"\\n\"]],\"locals\":[]},null],[0,\"\\n\\n\\t\\t\\t\\t\"],[11,\"ul\",[]],[15,\"class\",\"sidebar-menu\"],[13],[0,\"\\n\\n\"],[6,[\"if\"],[[28,[\"auth\",\"isLoggedIn\"]]],null,{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\tLogged in as: \"],[1,[28,[\"auth\",\"username\"]],false],[0,\" (\"],[11,\"a\",[]],[5,[\"action\"],[[28,[null]],\"logout\"]],[13],[0,\"Logout\"],[14],[0,\")\\n\\t\\t\\t\\t\\t\\t\\n\"]],\"locals\":[]},{\"statements\":[[0,\"\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"login\"],null,{\"statements\":[[0,\"Login\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"createaccount\"],null,{\"statements\":[[0,\"Create Account\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\"]],\"locals\":[]}],[0,\"\\t\\t\\t\\t\\t\"],[6,[\"active-link\"],null,null,{\"statements\":[[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"Home\"]],\"locals\":[]},null]],\"locals\":[]},null],[0,\"\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[4,\"<p class=\\\"social\\\">\\n\\t\\t\\t\\t\\t<a href=\\\"https://github.com/MLHale/\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-github\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://scholar.google.com/citations?user=YGtxqR4AAAAJ&hl\\\" data-animate-hover=\\\"pulse\\\" target=\\\"_blank\\\" class=\\\"external facebook\\\"><i class=\\\"fa fa-google\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"https://twitter.com/mlhale_\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"external twitter\\\"><i class=\\\"fa fa-twitter\\\"></i></a>\\n\\t\\t\\t\\t\\t<a href=\\\"mailto:mlhale@unomaha.edu\\\" target=\\\"_blank\\\" data-animate-hover=\\\"pulse\\\" class=\\\"email\\\"><i class=\\\"fa fa-envelope\\\"></i></a></p>\"],[0,\"\\n\\t\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"copyright\"],[13],[0,\"\\n\\t\\t\\t\\t\\t\"],[11,\"p\",[]],[15,\"class\",\"credit\"],[13],[0,\"©2018 Connor McCoy, Base code from Dr. Hale\"],[14],[0,\"\\n\\n\\t\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\n\"],[0,\"\\t\\t\"],[14],[0,\"\\n\\t\\t\"],[4,\"   *** SIDEBAR END ***  \"],[0,\"\\n\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"col-xs-12 col-sm-8 col-md-9 content-column\"],[13],[0,\"\\n\\t\\t\\t\"],[11,\"div\",[]],[15,\"class\",\"small-navbar visible-xs\"],[13],[0,\"\\n\\t\\t\\t\\t\"],[11,\"button\",[]],[15,\"type\",\"button\"],[15,\"data-toggle\",\"offcanvas\"],[15,\"class\",\"btn btn-ghost pull-left\"],[5,[\"action\"],[[28,[null]],\"toggleMenu\"]],[13],[0,\" \"],[11,\"i\",[]],[15,\"class\",\"fa fa-align-left\"],[13],[0,\" \"],[14],[0,\"Menu\"],[14],[0,\"\\n\\t\\t\\t\\t\"],[11,\"h1\",[]],[15,\"class\",\"small-navbar-heading\"],[13],[6,[\"link-to\"],[\"index\"],null,{\"statements\":[[0,\"ArtLink\"]],\"locals\":[]},null],[14],[0,\"\\n\\t\\t\\t\"],[14],[0,\"\\n\\t\\t\\t\"],[1,[33,[\"liquid-outlet\"],[\"main\"],null],false],[0,\"\\n\\t\\t\"],[14],[0,\"\\n\\t\"],[14],[0,\"\\n\\n\"],[14],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/application.hbs" } });
 });
 define("littlebits-frontend/templates/commissions", ["exports"], function (exports) {
   "use strict";
@@ -2363,6 +2434,14 @@ define('littlebits-frontend/templates/components/ember-popper', ['exports', 'emb
       return _emberPopper.default;
     }
   });
+});
+define("littlebits-frontend/templates/create-commission", ["exports"], function (exports) {
+  "use strict";
+
+  Object.defineProperty(exports, "__esModule", {
+    value: true
+  });
+  exports.default = Ember.HTMLBars.template({ "id": "ve+RO19u", "block": "{\"statements\":[[11,\"form\",[]],[15,\"class\",\"form\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[15,\"class\",\"header\"],[13],[0,\"\\n    Add a new commission\\n  \"],[14],[0,\"\\n  \"],[1,[33,[\"input\"],null,[[\"value\",\"name\",\"placeholder\",\"autocomplete\"],[[28,[\"form\",\"profile\"]],\"profile\",\"Profile\",\"off\"]]],false],[0,\"\\n  \"],[1,[33,[\"input\"],null,[[\"value\",\"name\",\"placeholder\",\"autocomplete\"],[[28,[\"form\",\"commtype\"]],\"commtype\",\"Commtype\",\"off\"]]],false],[0,\"\\n  \"],[1,[33,[\"textarea\"],null,[[\"value\",\"name\",\"placeholder\",\"rows\"],[[28,[\"form\",\"description\"]],\"description\",\"Description\",10]]],false],[0,\"\\n  \"],[1,[33,[\"input\"],null,[[\"value\",\"name\",\"placeholder\",\"autocomplete\"],[[28,[\"form\",\"price_min\"]],\"price_min\",\"Price Min\",\"off\"]]],false],[0,\"\\n  \"],[1,[33,[\"input\"],null,[[\"value\",\"name\",\"placeholder\",\"autocomplete\"],[[28,[\"form\",\"price_max\"]],\"price_max\",\"Price Max\",\"off\"]]],false],[0,\"\\n  \"],[1,[33,[\"input\"],null,[[\"value\",\"name\",\"placeholder\",\"autocomplete\"],[[28,[\"form\",\"slots\"]],\"slots\",\"Slots\",\"off\"]]],false],[0,\"\\n\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"actions\"],[13],[0,\"\\n  \"],[11,\"div\",[]],[13],[0,\"\\n    \"],[11,\"button\",[]],[5,[\"action\"],[[28,[null]],\"create\"]],[13],[0,\"\\n      Create\\n    \"],[14],[0,\"\\n    \"],[11,\"button\",[]],[5,[\"action\"],[[28,[null]],\"cancel\"]],[13],[0,\"\\n      Cancel\\n    \"],[14],[0,\"\\n  \"],[14],[0,\"\\n\"],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/create-commission.hbs" } });
 });
 define("littlebits-frontend/templates/createaccount", ["exports"], function (exports) {
   "use strict";
@@ -2600,6 +2679,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+5032a177"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+c1d87ffe"});
 }
 //# sourceMappingURL=littlebits-frontend.map

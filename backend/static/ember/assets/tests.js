@@ -20,6 +20,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
     assert.ok(false, 'controllers/application.js should pass ESLint\n\n20:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n21:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n22:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n32:11 - Unexpected console statement. (no-console)\n33:11 - Unexpected console statement. (no-console)\n40:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)\n41:2 - Mixed spaces and tabs. (no-mixed-spaces-and-tabs)');
   });
 
+  QUnit.test('controllers/create-commission.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'controllers/create-commission.js should pass ESLint\n\n2:8 - \'Controller\' is defined but never used. (no-unused-vars)');
+  });
+
   QUnit.test('controllers/createaccount.js', function (assert) {
     assert.expect(1);
     assert.ok(false, 'controllers/createaccount.js should pass ESLint\n\n26:11 - Unexpected console statement. (no-console)\n27:11 - Unexpected console statement. (no-console)\n31:9 - Unexpected console statement. (no-console)');
@@ -78,6 +83,11 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
   QUnit.test('routes/commissions.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'routes/commissions.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('routes/create-commission.js', function (assert) {
+    assert.expect(1);
+    assert.ok(false, 'routes/create-commission.js should pass ESLint\n\n2:8 - \'Route\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('routes/createaccount.js', function (assert) {
@@ -239,6 +249,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
     assert.ok(true, 'unit/controllers/application-test.js should pass ESLint\n\n');
   });
 
+  QUnit.test('unit/controllers/create-commission-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/controllers/create-commission-test.js should pass ESLint\n\n');
+  });
+
   QUnit.test('unit/controllers/createaccount-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/controllers/createaccount-test.js should pass ESLint\n\n');
@@ -282,6 +297,11 @@ define('littlebits-frontend/tests/tests.lint-test', [], function () {
   QUnit.test('unit/routes/commissions-test.js', function (assert) {
     assert.expect(1);
     assert.ok(true, 'unit/routes/commissions-test.js should pass ESLint\n\n');
+  });
+
+  QUnit.test('unit/routes/create-commission-test.js', function (assert) {
+    assert.expect(1);
+    assert.ok(true, 'unit/routes/create-commission-test.js should pass ESLint\n\n');
   });
 
   QUnit.test('unit/routes/createaccount-test.js', function (assert) {
@@ -332,6 +352,20 @@ define('littlebits-frontend/tests/unit/controllers/application-test', ['ember-qu
   'use strict';
 
   (0, _emberQunit.moduleFor)('controller:application', 'Unit | Controller | application', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  // Replace this with your real tests.
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var controller = this.subject();
+    assert.ok(controller);
+  });
+});
+define('littlebits-frontend/tests/unit/controllers/create-commission-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('controller:create-commission', 'Unit | Controller | create commission', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });
@@ -480,6 +514,19 @@ define('littlebits-frontend/tests/unit/routes/commissions-test', ['ember-qunit']
   'use strict';
 
   (0, _emberQunit.moduleFor)('route:commissions', 'Unit | Route | commissions', {
+    // Specify the other units that are required for this test.
+    // needs: ['controller:foo']
+  });
+
+  (0, _emberQunit.test)('it exists', function (assert) {
+    var route = this.subject();
+    assert.ok(route);
+  });
+});
+define('littlebits-frontend/tests/unit/routes/create-commission-test', ['ember-qunit'], function (_emberQunit) {
+  'use strict';
+
+  (0, _emberQunit.moduleFor)('route:create-commission', 'Unit | Route | create commission', {
     // Specify the other units that are required for this test.
     // needs: ['controller:foo']
   });

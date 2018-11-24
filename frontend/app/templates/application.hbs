@@ -12,6 +12,7 @@
 
 					{{#if auth.isLoggedIn}}
 						Logged in as: {{auth.username}} (<a {{action "logout"}}>Logout</a>)
+						
 					{{else}}
 						{{#active-link}}{{#link-to 'login'}}Login{{/link-to}}{{/active-link}}
 						{{#active-link}}{{#link-to 'createaccount'}}Create Account{{/link-to}}{{/active-link}}

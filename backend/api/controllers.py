@@ -273,6 +273,7 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
 class CommissionViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
+    #parser_classes = (parsers.JSONParser,)
     queryset = Commission.objects.all()
     serializer_class = CommissionSerializer
 '''

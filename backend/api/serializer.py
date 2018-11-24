@@ -13,8 +13,8 @@ class CommissionSerializer(serializers.ModelSerializer):
         model = Commission
         fields = ('id', 'profile', 'commtype', 'description', 'price_min', 'price_max', 'slots')
 
-    #class JSONAPIMeta:
-    #    included_resources = ['profile']
+    class JSONAPIMeta:
+        included_resources = ['profile']
     """
     def create(self, validated_data):
         user_data = validated_data.pop('user')
