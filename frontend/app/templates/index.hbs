@@ -6,8 +6,10 @@
 	{{input value=queryCS placeholder="Comm Status"}}
 	{{#filter-content content=filteredCS properties="artstyle" as |filteredAS queryAS|}}
 		{{input value=queryAS placeholder="Art Style"}}
+		{{#filter-content content=filteredAS properties="commissions.@each.commtype" as |filteredCT queryCT|}}
+			{{input value=queryCT placeholder="Commission Type"}}
 	<hr>
-		{{#masonry-grid items=filteredAS customLayout=true gutter=10 as |item index grid|}}
+		{{#masonry-grid items=filteredCT customLayout=true gutter=10 as |item index grid|}}
 			{{#masonry-item item=item grid=grid class="box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3"}}
 				{{#if item.link}}
 					{{#link-to item.link class="box-masonry-image with-hover-overlay with-hover-icon"}}
@@ -30,6 +32,7 @@
 				</div>
 			{{/masonry-item}}
 		{{/masonry-grid}}
+{{/filter-content}}		
 {{/filter-content}}
 {{/filter-content}}
 {{else}}
