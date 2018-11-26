@@ -4,7 +4,7 @@
 		<div id="sidebar" class="col-xs-6 col-sm-4 col-md-3 sidebar-offcanvas">
 			<div class="sidebar-content">
 				{{#link-to 'index'}}
-				    <p class="sidebar-p"><h4>ArtLink</h4></p>
+				    <p class="sidebar-p"><h1>ArtLink</h1></p>
         {{/link-to}}
 
 
@@ -12,7 +12,7 @@
 
 					{{#if auth.isLoggedIn}}
 						Logged in as: {{auth.username}} (<a {{action "logout"}}>Logout</a>)
-						
+
 					{{else}}
 						{{#active-link}}{{#link-to 'login'}}Login{{/link-to}}{{/active-link}}
 						{{#active-link}}{{#link-to 'createaccount'}}Create Account{{/link-to}}{{/active-link}}

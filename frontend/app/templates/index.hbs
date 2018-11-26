@@ -1,29 +1,37 @@
 <!--   *** PORTFOLIO ***-->
 
 {{#if content}}
-	{{#masonry-grid items=content customLayout=true gutter=10 as |item index grid|}}
-		{{#masonry-item item=item grid=grid class="box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3"}}
-			{{#if item.link}}
-				{{#link-to item.link class="box-masonry-image with-hover-overlay with-hover-icon"}}
+<h4>Search</h4>
+{{#filter-content content=content properties="commstatus" as |filteredCS queryCS|}}
+	{{input value=queryCS placeholder="Comm Status"}}
+	{{#filter-content content=filteredCS properties="artstyle" as |filteredAS queryAS|}}
+		{{input value=queryAS placeholder="Art Style"}}
+	<hr>
+		{{#masonry-grid items=filteredAS customLayout=true gutter=10 as |item index grid|}}
+			{{#masonry-item item=item grid=grid class="box-masonry col-xs-12 col-sm-6 col-md-3 col-lg-3"}}
+				{{#if item.link}}
+					{{#link-to item.link class="box-masonry-image with-hover-overlay with-hover-icon"}}
+						<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
+					{{/link-to}}
+				{{else if item.id}}
+					<a href="/{{item.id}}" target="_self" class="box-masonry-image with-hover-overlay with-hover-icon">
+						<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
+					</a>
+				{{else}}
 					<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
-				{{/link-to}}
-			{{else if item.id}}
-				<a href="/{{item.id}}" target="_self" class="box-masonry-image with-hover-overlay with-hover-icon">
-					<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
-				</a>
-			{{else}}
-				<img src="{{constants.rootURL}}{{item.img}}" class="img-responsive">
-			{{/if}}
-			<div class="box-masonry-text">
-				{{!--THE BOX INFO IS RIGHT HERE YO--}}
-				<h5>User: {{item.user.username}}</h5>
-				<h5>Comm Status: {{item.commstatus}}</h5>
-				<div class="box-masonry-desription">
-					<p>{{item.description}}</p>
+				{{/if}}
+				<div class="box-masonry-text">
+					{{!--THE BOX INFO IS RIGHT HERE YO--}}
+					<h5>User: {{item.user.username}}</h5>
+					<h5>Comm Status: {{item.commstatus}}</h5>
+					<div class="box-masonry-desription">
+						<p>{{item.description}}</p>
+					</div>
 				</div>
-			</div>
-		{{/masonry-item}}
-	{{/masonry-grid}}
+			{{/masonry-item}}
+		{{/masonry-grid}}
+{{/filter-content}}
+{{/filter-content}}
 {{else}}
 	{{#masonry-grid items=defaultitems customLayout=true gutter=10 as |item index grid|}}
 		{{#masonry-item item=item grid=grid class="box-masonry col-xs-12 col-sm-6 col-md-5 col-lg-5"}}

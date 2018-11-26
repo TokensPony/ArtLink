@@ -50,7 +50,7 @@ export default Ember.Route.extend({
 	model() {
     return this.store.findAll('profile');
     /*return this.store.findAll('profile').then(function(list){
-      return list.filterBy("user", 9);
+      return list.filterBy("commstatus", "Open");
     });*/
     //return this.store.queryRecord('profile', {filter: {user : 9}})
 	},
