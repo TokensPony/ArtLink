@@ -1,43 +1,37 @@
-<form class="form">
+<form>
   <div class="header">
     Add a new commission
   </div>
-  {{input
-    value=form.profile
-    name="profile"
-    placeholder="Profile"
-    autocomplete='off'
-  }}
   {{input
     value=form.commtype
     name="commtype"
     placeholder="Commtype"
     autocomplete='off'
-  }}
+  }}<br>
   {{textarea
     value=form.description
     name="description"
     placeholder="Description"
     rows=10
-  }}
+  }}<br>
   {{input
     value=form.price_min
     name="price_min"
     placeholder="Price Min"
     autocomplete='off'
-  }}
+  }}<br>
   {{input
     value=form.price_max
     name="price_max"
     placeholder="Price Max"
     autocomplete='off'
-  }}
+  }}<br>
   {{input
     value=form.slots
     name="slots"
     placeholder="Slots"
     autocomplete='off'
-  }}
+  }}<br>
 </form>
 <div class="actions">
   <div>

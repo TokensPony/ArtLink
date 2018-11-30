@@ -5,7 +5,6 @@ import { computed } from '@ember/object';
 export default Ember.Controller.extend({
     form: computed(function() {
       return{
-        profile: '',
         commtype: '',
         description: '',
         price_min: '',

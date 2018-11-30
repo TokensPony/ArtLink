@@ -93,11 +93,18 @@ class Register(APIView):
 
 class Session(APIView):
     permission_classes = (AllowAny,)
+    #parser_classes = (parsers.JSONParser,)
     def form_response(self, isauthenticated, userid, username, error=""):
+        serializer = ''
+        profileData = ''
+        if(userid is not None):
+            serializer = ProfileSerializer(Profile.objects.get(pk=userid))
+            profileData = serializer.data
         data = {
             'isauthenticated': isauthenticated,
             'userid': userid,
-            'username': username
+            'username': username,
+            'profile': profileData
         }
         if error:
             data['message'] = error

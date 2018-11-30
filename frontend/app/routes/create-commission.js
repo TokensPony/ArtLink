@@ -7,7 +7,7 @@ export default Ember.Route.extend({
 
   setupController(controller, model) {
     this._super(controller, model);
-    this.controller.set('form.profile', '');
+    //this.controller.set('form.profile', '');
     this.controller.set('form.commtype', '');
     this.controller.set('form.description', '');
     this.controller.set('form.price_min', '');
@@ -19,10 +19,12 @@ export default Ember.Route.extend({
     create() {
       const form = this.controller.get('form');
       const store = this.get('store');
-      var profileData = this.store.find('profile', 1);
+      var profileData = this.get('auth.profile');
+      //var profileData = this.store.find('profile', this.get('auth.userid'));
       /*this.store.find('profile', 1).then(function(profile) {
         newCommission.set('profile', profile);
       });*/
+      console.log(profileData);
       const newCommission = store.createRecord('commission', {
         profile: profileData,
         commtype: form.commtype,

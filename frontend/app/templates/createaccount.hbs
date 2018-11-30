@@ -6,7 +6,7 @@
 					<div class="col-sm-12 col-md-10 col-md-offset-1">
 						{{#if auth.errorMsg}}
 						<div class="alert alert-danger">
-							<p style="text-align: center;">Incorrect username/password</p>
+							<p style="text-align: center;">{{auth.errorMsg}}</p>
 						</div>
 						{{/if}}
 						<div class="form-group">
@@ -14,7 +14,7 @@
 								<span class="input-group-addon">
 									<i class="glyphicon glyphicon-user"></i>
 								</span>
-								{{input type="text" class="input-sm form-control" value=auth.username enter="login" placeholder="Username" autofocus="autofocus"}}
+								{{input type="text" class="input-sm form-control" required=true value=auth.username enter="login" placeholder="Username" autofocus="autofocus"}}
 							</div>
 						</div>
             <div class="form-group">
@@ -22,7 +22,7 @@
 								<span class="input-group-addon">
 									<i class="glyphicon glyphicon-user"></i>
 								</span>
-								{{input type="text" class="input-sm form-control" value=auth.email enter="login" placeholder="Email" autofocus="autofocus"}}
+								{{input type="text" class="input-sm form-control" required=true value=auth.email enter="login" placeholder="Email" autofocus="autofocus"}}
 							</div>
 						</div>
 						<div class="form-group">
@@ -30,7 +30,7 @@
 								<span class="input-group-addon">
 									<i class="glyphicon glyphicon-lock"></i>
 								</span>
-								{{input type="text"class="input-sm form-control" value=auth.password enter="login" placeholder="Password" type="password"}}
+								{{input type="text"class="input-sm form-control" required=true value=auth.password enter="login" placeholder="Password" type="password"}}
 							</div>
 						</div>
 						<div class="form-group">
