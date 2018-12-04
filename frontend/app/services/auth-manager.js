@@ -108,7 +108,7 @@ export default Ember.Service.extend({
 				console.log('The user: \''+response.data.username+'\' is currently logged in.');
 				auth.set('username', response.data.username);
 				auth.set('userid', response.data.userid);
-				auth.set('profile', response.data.profile);
+				auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 				auth.set('isLoggedIn', true);
 			} else{
 				//errors

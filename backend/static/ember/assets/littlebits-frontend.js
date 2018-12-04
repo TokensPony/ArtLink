@@ -2062,9 +2062,9 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
         /*this.store.find('profile', 1).then(function(profile) {
           newCommission.set('profile', profile);
         });*/
-        console.log(profileData);
+        console.log(profileData.get('id'));
         var newCommission = store.createRecord('commission', {
-          profile: profileData,
+          profile: this.get('auth.profile'),
           commtype: form.commtype,
           description: form.description,
           price_min: form.price_min,
@@ -2369,7 +2369,7 @@ define('littlebits-frontend/services/auth-manager', ['exports'], function (expor
 					console.log('The user: \'' + response.data.username + '\' is currently logged in.');
 					auth.set('username', response.data.username);
 					auth.set('userid', response.data.userid);
-					auth.set('profile', response.data.profile);
+					auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 					auth.set('isLoggedIn', true);
 				} else {
 					//errors
@@ -2694,6 +2694,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+b65bb3dd"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+a5452e29"});
 }
 //# sourceMappingURL=littlebits-frontend.map

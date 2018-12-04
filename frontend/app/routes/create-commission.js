@@ -24,9 +24,9 @@ export default Ember.Route.extend({
       /*this.store.find('profile', 1).then(function(profile) {
         newCommission.set('profile', profile);
       });*/
-      console.log(profileData);
+      console.log(profileData.get('id'));
       const newCommission = store.createRecord('commission', {
-        profile: profileData,
+        profile: this.get('auth.profile'),
         commtype: form.commtype,
         description: form.description,
         price_min : form.price_min,

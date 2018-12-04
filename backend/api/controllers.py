@@ -39,6 +39,7 @@ from rest_framework.authentication import *
 from api.pagination import *
 import json, datetime, pytz
 from django.core import serializers
+from django.core.validators import *
 import requests
 
 
@@ -73,6 +74,10 @@ class Register(APIView):
         willdraw = request.data.get('willdraw')
         wontdraw = request.data.get('wontdraw')
 
+        try:
+            validate_email(email)
+        except:
+            return Response({'email': 'Email is Invalid.', 'status': 'error'})
         print request.POST.get('username')
         if User.objects.filter(username=username).exists():
             return Response({'username': 'Username is taken.', 'status': 'error'})
@@ -283,6 +288,43 @@ class CommissionViewSet(viewsets.ModelViewSet):
     #parser_classes = (parsers.JSONParser,)
     queryset = Commission.objects.all()
     serializer_class = CommissionSerializer
+
+    #@detail_route(methods=['post'])
+    def create(self, request, *args, **kwargs):
+        print 'REQUEST DATA'
+        print str(request.data.get('profile'))
+
+        commtype = request.data.get('commtype')
+        description = request.data.get('description')
+        profile = Profile.objects.get(pk= (request.data.get('profile').get('id')))
+        price_min = request.data.get('price_min')
+        price_max = request.data.get('price_max')
+        slots = request.data.get('slots')
+        newCommission = Commission(
+            commtype=commtype,
+            description = description,
+            profile=profile,
+            price_min = price_min,
+            price_max = price_max,
+            slots = slots
+        )
+
+        try:
+            newCommission.clean_fields()
+        except ValidationError as e:
+            print e
+            print str(request.data.get('profile'))
+            return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
+
+        newCommission.save()
+        #print 'New Profile Logged from: ' + requestor
+        return Response({'success': True}, status=status.HTTP_200_OK)
+    #def create(self, request)
+        #Use custome post
+
+    #Enter edit
+    #Tighten
+    # Reject things on the API side
 '''
 class Commissions(APIView):
     permission_classes = (AllowAny,)
