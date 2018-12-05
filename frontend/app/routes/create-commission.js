@@ -5,6 +5,12 @@ import { inject as service } from '@ember/service';
 export default Ember.Route.extend({
   store: service(),
 
+  beforeModel(transition){
+    if(!this.get('auth.isLoggedIn')){
+      this.transitionTo('login');
+    }
+  },
+
   setupController(controller, model) {
     this._super(controller, model);
     //this.controller.set('form.profile', '');

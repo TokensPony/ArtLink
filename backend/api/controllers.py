@@ -309,6 +309,8 @@ class CommissionViewSet(viewsets.ModelViewSet):
             slots = slots
         )
 
+        if(price_max < price_min):
+            return Response({'price_max': 'Max must be greater than or equal to min', 'status': 'error'})
         try:
             newCommission.clean_fields()
         except ValidationError as e:

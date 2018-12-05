@@ -12,7 +12,7 @@
 
 					{{#if auth.isLoggedIn}}
 						Logged in as: {{auth.username}} (<a {{action "logout"}}>Logout</a>)
-
+						{{#active-link}}{{#link-to 'create-commission'}}Create Commission{{/link-to}}{{/active-link}}
 					{{else}}
 						{{#active-link}}{{#link-to 'login'}}Login{{/link-to}}{{/active-link}}
 						{{#active-link}}{{#link-to 'createaccount'}}Create Account{{/link-to}}{{/active-link}}
