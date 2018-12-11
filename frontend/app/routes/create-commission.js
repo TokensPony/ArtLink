@@ -6,9 +6,12 @@ export default Ember.Route.extend({
   store: service(),
 
   beforeModel(transition){
-    if(!this.get('auth.isLoggedIn')){
-      this.transitionTo('login');
-    }
+    let blah = this;
+    setTimeout(function(){
+      if(!blah.get('auth.isLoggedIn')){
+        this.transitionTo('login');
+      }
+    }, 2000);
   },
 
   setupController(controller, model) {
@@ -39,12 +42,12 @@ export default Ember.Route.extend({
         price_max : form.price_max,
         slots : form.slots,
       });
-
-      newCommission.get('id');
+      let context = this;
+      //newCommission.get('id');
 
       newCommission.save()
         .then(() => {
-          this.transitionTo('index');
+          context.transitionTo('index');
         });
      },
      cancel() {

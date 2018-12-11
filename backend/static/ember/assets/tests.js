@@ -87,7 +87,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/create-commission.js', function (assert) {
     assert.expect(1);
-    assert.ok(false, 'routes/create-commission.js should pass ESLint\n\n2:8 - \'Route\' is defined but never used. (no-unused-vars)\n8:15 - \'transition\' is defined but never used. (no-unused-vars)\n33:7 - Unexpected console statement. (no-console)');
+    assert.ok(false, 'routes/create-commission.js should pass ESLint\n\n2:8 - \'Route\' is defined but never used. (no-unused-vars)\n8:15 - \'transition\' is defined but never used. (no-unused-vars)\n36:7 - Unexpected console statement. (no-console)');
   });
 
   QUnit.test('routes/createaccount.js', function (assert) {
@@ -102,7 +102,7 @@ define('littlebits-frontend/tests/app.lint-test', [], function () {
 
   QUnit.test('routes/login.js', function (assert) {
     assert.expect(1);
-    assert.ok(true, 'routes/login.js should pass ESLint\n\n');
+    assert.ok(false, 'routes/login.js should pass ESLint\n\n4:15 - \'transition\' is defined but never used. (no-unused-vars)');
   });
 
   QUnit.test('routes/profile.js', function (assert) {

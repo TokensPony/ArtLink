@@ -2041,9 +2041,12 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
     store: Ember.inject.service(),
 
     beforeModel: function beforeModel(transition) {
-      if (!this.get('auth.isLoggedIn')) {
-        this.transitionTo('login');
-      }
+      var blah = this;
+      setTimeout(function () {
+        if (!blah.get('auth.isLoggedIn')) {
+          this.transitionTo('login');
+        }
+      }, 2000);
     },
     setupController: function setupController(controller, model) {
       this._super(controller, model);
@@ -2058,8 +2061,6 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
 
     actions: {
       create: function create() {
-        var _this = this;
-
         var form = this.controller.get('form');
         var store = this.get('store');
         var profileData = this.get('auth.profile');
@@ -2076,11 +2077,11 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
           price_max: form.price_max,
           slots: form.slots
         });
-
-        newCommission.get('id');
+        var context = this;
+        //newCommission.get('id');
 
         newCommission.save().then(function () {
-          _this.transitionTo('index');
+          context.transitionTo('index');
         });
       },
       cancel: function cancel() {
@@ -2176,7 +2177,13 @@ define('littlebits-frontend/routes/login', ['exports'], function (exports) {
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.Route.extend({});
+  exports.default = Ember.Route.extend({
+    beforeModel: function beforeModel(transition) {
+      if (!this.get('auth.isLoggedIn')) {
+        this.transitionTo('index');
+      }
+    }
+  });
 });
 define('littlebits-frontend/routes/profile', ['exports'], function (exports) {
   'use strict';
@@ -2493,7 +2500,7 @@ define("littlebits-frontend/templates/profile", ["exports"], function (exports) 
   Object.defineProperty(exports, "__esModule", {
     value: true
   });
-  exports.default = Ember.HTMLBars.template({ "id": "fUgbaVyb", "block": "{\"statements\":[[11,\"h2\",[]],[13],[0,\" Profile\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileHeader\"],[13],[0,\"\\n  \"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"model\",\"img\"]]]]],[13],[14],[0,\"\\n  \"],[11,\"b\",[]],[13],[1,[28,[\"model\",\"user\",\"username\"]],false],[14],[0,\"   Name: \"],[1,[28,[\"model\",\"user\",\"first_name\"]],false],[0,\"\\n\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileDetails\"],[13],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Commission Status:\"],[14],[0,\" \"],[1,[28,[\"model\",\"commstatus\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Art Style:\"],[14],[0,\" \"],[1,[28,[\"model\",\"artstyle\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Description:\"],[14],[0,\" \"],[1,[28,[\"model\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[14],[0,\"\\n\\n\"],[11,\"h4\",[]],[13],[0,\"Commission Types\"],[14],[0,\"\\n\"],[11,\"table\",[]],[15,\"style\",\"width:100%\"],[13],[0,\"\\n\"],[6,[\"each\"],[[28,[\"model\",\"commissions\"]]],null,{\"statements\":[[0,\"    \"],[11,\"tr\",[]],[13],[0,\"\\n      \"],[11,\"td\",[]],[13],[0,\"\\n        \"],[11,\"b\",[]],[13],[1,[28,[\"commission\",\"commtype\"]],false],[0,\":\"],[14],[0,\" $\"],[1,[28,[\"commission\",\"price_min\"]],false],[0,\" - $\"],[1,[28,[\"commission\",\"price_max\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[11,\"b\",[]],[13],[0,\"Slots:\"],[14],[0,\" \"],[1,[28,[\"commission\",\"slots\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[1,[28,[\"commission\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n      \"],[14],[0,\"\\n    \"],[14],[0,\"\\n\"]],\"locals\":[\"commission\"]},null],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
+  exports.default = Ember.HTMLBars.template({ "id": "w2DItPzo", "block": "{\"statements\":[[11,\"h2\",[]],[13],[0,\" Profile\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileHeader\"],[13],[0,\"\\n  \"],[11,\"img\",[]],[16,\"src\",[34,[[28,[\"constants\",\"rootURL\"]],[28,[\"model\",\"img\"]]]]],[13],[14],[0,\"\\n  \"],[11,\"b\",[]],[13],[1,[28,[\"model\",\"user\",\"username\"]],false],[14],[0,\"   Name: \"],[1,[28,[\"model\",\"user\",\"first_name\"]],false],[0,\"\\n\"],[14],[0,\"\\n\"],[11,\"div\",[]],[15,\"class\",\"profileDetails\"],[13],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Commission Status:\"],[14],[0,\" \"],[1,[28,[\"model\",\"commstatus\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Art Style:\"],[14],[0,\" \"],[1,[28,[\"model\",\"artstyle\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[11,\"b\",[]],[13],[0,\"Description:\"],[14],[0,\" \"],[1,[28,[\"model\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n\"],[14],[0,\"\\n\\n\"],[4,\"This iterates through each piece of commission data and puts them into a table\"],[0,\"\\n\"],[11,\"h4\",[]],[13],[0,\"Commission Types\"],[14],[0,\"\\n\"],[11,\"table\",[]],[15,\"style\",\"width:100%\"],[13],[0,\"\\n\"],[6,[\"each\"],[[28,[\"model\",\"commissions\"]]],null,{\"statements\":[[0,\"    \"],[11,\"tr\",[]],[13],[0,\"\\n      \"],[11,\"td\",[]],[13],[0,\"\\n        \"],[11,\"b\",[]],[13],[1,[28,[\"commission\",\"commtype\"]],false],[0,\":\"],[14],[0,\" $\"],[1,[28,[\"commission\",\"price_min\"]],false],[0,\" - $\"],[1,[28,[\"commission\",\"price_max\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[11,\"b\",[]],[13],[0,\"Slots:\"],[14],[0,\" \"],[1,[28,[\"commission\",\"slots\"]],false],[11,\"br\",[]],[13],[14],[0,\"\\n        \"],[1,[28,[\"commission\",\"description\"]],false],[11,\"br\",[]],[13],[14],[11,\"br\",[]],[13],[14],[0,\"\\n      \"],[14],[0,\"\\n    \"],[14],[0,\"\\n\"]],\"locals\":[\"commission\"]},null],[14],[0,\"\\n\"],[1,[26,[\"outlet\"]],false],[0,\"\\n\"]],\"locals\":[],\"named\":[],\"yields\":[],\"hasPartials\":false}", "meta": { "moduleName": "littlebits-frontend/templates/profile.hbs" } });
 });
 define('littlebits-frontend/transitions/cross-fade', ['exports', 'liquid-fire/transitions/cross-fade'], function (exports, _crossFade) {
   'use strict';
@@ -2699,6 +2706,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+a5452e29"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+a473a5cb"});
 }
 //# sourceMappingURL=littlebits-frontend.map
