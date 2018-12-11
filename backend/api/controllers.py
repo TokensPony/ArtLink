@@ -36,6 +36,8 @@ from rest_framework.authentication import *
 #filters
 #from filters.mixins import *
 
+import bleach
+
 from api.pagination import *
 import json, datetime, pytz
 from django.core import serializers
@@ -63,7 +65,7 @@ class Register(APIView):
 
     def post(self, request, *args, **kwargs):
         # Login
-        username = request.data.get('username') #you need to apply validators to these
+        username = bleach.clean(request.data.get('username')) #you need to apply validators to these
         print username
         password = request.data.get('password') #you need to apply validators to these
         print password
@@ -294,8 +296,8 @@ class CommissionViewSet(viewsets.ModelViewSet):
         print 'REQUEST DATA'
         print str(request.data.get('profile'))
 
-        commtype = request.data.get('commtype')
-        description = request.data.get('description')
+        commtype = bleach.clean(request.data.get('commtype'))
+        description = bleach.clean(request.data.get('description'))
         profile = Profile.objects.get(pk= (request.data.get('profile').get('id')))
         price_min = request.data.get('price_min')
         price_max = request.data.get('price_max')
