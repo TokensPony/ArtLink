@@ -321,8 +321,10 @@ class CommissionViewSet(viewsets.ModelViewSet):
             return Response({'success':False, 'error':e}, status=status.HTTP_400_BAD_REQUEST)
 
         newCommission.save()
+        #Return serialized object
         #print 'New Profile Logged from: ' + requestor
-        return Response({'success': True}, status=status.HTTP_200_OK)
+        newData = CommissionSerializer(newCommission)
+        return Response(newData.data, status=status.HTTP_200_OK)
     #def create(self, request)
         #Use custome post
 

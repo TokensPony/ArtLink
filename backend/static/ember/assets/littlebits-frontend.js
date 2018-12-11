@@ -2706,6 +2706,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+9c15584b"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+28d9aeda"});
 }
 //# sourceMappingURL=littlebits-frontend.map
