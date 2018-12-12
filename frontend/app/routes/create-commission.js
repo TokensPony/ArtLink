@@ -4,14 +4,15 @@ import { inject as service } from '@ember/service';
 
 export default Ember.Route.extend({
   store: service(),
+  auth: Ember.inject.service('auth-manager'),
 
   beforeModel(transition){
     let blah = this;
-    setTimeout(function(){
-      if(!blah.get('auth.isLoggedIn')){
-        this.transitionTo('login');
-      }
-    }, 2000);
+    //setTimeout(1000);
+    //console.log(transition);
+    if(!blah.get('auth.isLoggedIn')){
+      blah.transitionTo('login');
+    }
   },
 
   setupController(controller, model) {

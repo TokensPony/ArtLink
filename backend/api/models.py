@@ -11,20 +11,6 @@ from django.dispatch import receiver
 from django.contrib import admin
 import base64
 
-class Event(models.Model):
-    eventtype = models.CharField(max_length=1000, blank=False)
-    timestamp = models.DateTimeField()
-    userid = models.CharField(max_length=1000, blank=True)
-    requestor = models.GenericIPAddressField(blank=False)
-    commstatus = models.CharField(max_length=1000, blank=False)
-    description = models.CharField(max_length=1000, blank=False)
-    name = models.CharField(max_length=1000, blank=False)
-
-    def __str__(self):
-        return str(self.eventtype)
-
-class EventAdmin(admin.ModelAdmin):
-    list_display = ('eventtype', 'timestamp')
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = 'profile')
@@ -41,16 +27,6 @@ class Profile(models.Model):
     class JSONAPIMeta:
         resource_name = "profiles"
 
-'''
-@receiver(post_save, sender=User)
-def create_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_profile(sender, instance, **kwargs):
-    instance.profile.save()
-'''
 
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ('user',)
@@ -71,13 +47,3 @@ class Commission(models.Model):
 
 class CommissionAdmin(admin.ModelAdmin):
     list_display = ('profile', 'commtype')
-
-class ApiKey(models.Model):
-    owner = models.CharField(max_length=1000, blank=False)
-    key = models.CharField(max_length=5000, blank=False)
-
-    def __str__(self):
-        return str(self.owner) + str(self.key)
-
-class ApiKeyAdmin(admin.ModelAdmin):
-    list_display = ('owner','key')

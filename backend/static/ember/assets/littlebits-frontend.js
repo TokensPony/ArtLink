@@ -2039,14 +2039,15 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
   });
   exports.default = Ember.Route.extend({
     store: Ember.inject.service(),
+    auth: Ember.inject.service('auth-manager'),
 
     beforeModel: function beforeModel(transition) {
       var blah = this;
-      setTimeout(function () {
-        if (!blah.get('auth.isLoggedIn')) {
-          this.transitionTo('login');
-        }
-      }, 2000);
+      //setTimeout(1000);
+      //console.log(transition);
+      if (!blah.get('auth.isLoggedIn')) {
+        blah.transitionTo('login');
+      }
     },
     setupController: function setupController(controller, model) {
       this._super(controller, model);
@@ -2178,9 +2179,12 @@ define('littlebits-frontend/routes/login', ['exports'], function (exports) {
     value: true
   });
   exports.default = Ember.Route.extend({
+    auth: Ember.inject.service('auth-manager'),
     beforeModel: function beforeModel(transition) {
-      if (!this.get('auth.isLoggedIn')) {
-        this.transitionTo('index');
+      var blah = this;
+      console.log(blah.get('auth.isLoggedIn'));
+      if (blah.get('auth.isLoggedIn')) {
+        blah.transitionTo('index');
       }
     }
   });
@@ -2376,13 +2380,19 @@ define('littlebits-frontend/services/auth-manager', ['exports'], function (expor
 
 			//check to see if the user is logged into the API
 			Ember.$.get('/api/session', function (response) {
+				console.log(auth.get('routing.currentRouteName'));
 				if (response.data.isauthenticated) {
 					//success
+					console.log(response);
 					console.log('The user: \'' + response.data.username + '\' is currently logged in.');
 					auth.set('username', response.data.username);
 					auth.set('userid', response.data.userid);
 					auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 					auth.set('isLoggedIn', true);
+
+					if (auth.get('routing.currentRouteName') == "login") {
+						auth.get('routing').transitionTo('index');
+					}
 				} else {
 					//errors
 					console.log('The user is not currently logged in.');

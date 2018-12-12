@@ -103,13 +103,19 @@ export default Ember.Service.extend({
 
 		//check to see if the user is logged into the API
 		Ember.$.get('/api/session', function(response){
+			console.log(auth.get('routing.currentRouteName'));
 			if(response.data.isauthenticated){
 				//success
+				console.log(response);
 				console.log('The user: \''+response.data.username+'\' is currently logged in.');
 				auth.set('username', response.data.username);
 				auth.set('userid', response.data.userid);
 				auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 				auth.set('isLoggedIn', true);
+
+				if(auth.get('routing.currentRouteName') == "login"){
+					auth.get('routing').transitionTo('index');
+				}
 			} else{
 				//errors
 				console.log('The user is not currently logged in.');
