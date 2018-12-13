@@ -76,7 +76,7 @@ class Register(APIView):
         print password
         email = bleach.clean(request.data.get('email')) #you need to apply validators to these
         commstatus = bleach.clean(request.data.get('commstatus'))
-        description = "Hello everybody! I'm an artist, and this is my test description!"
+        description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec id congue sapien, sed iaculis quam. Pellentesque in tortor quis elit interdum euismod at faucibus dolor."
         artstyle = bleach.clean(request.data.get('artstyle'))
         willdraw = bleach.clean(request.data.get('willdraw'))
         wontdraw = bleach.clean(request.data.get('wontdraw'))
