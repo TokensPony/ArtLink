@@ -72,20 +72,23 @@ class Register(APIView):
         # Login
         username = bleach.clean(request.data.get('username')) #you need to apply validators to these
         print username
-        password = request.data.get('password') #you need to apply validators to these
+        password = bleach.clean(request.data.get('password')) #you need to apply validators to these
         print password
-        email = request.data.get('email') #you need to apply validators to these
-        commstatus = request.data.get('commstatus')
+        email = bleach.clean(request.data.get('email')) #you need to apply validators to these
+        commstatus = bleach.clean(request.data.get('commstatus'))
         description = "Hello everybody! I'm an artist, and this is my test description!"
-        artstyle = request.data.get('artstyle')
-        willdraw = request.data.get('willdraw')
-        wontdraw = request.data.get('wontdraw')
+        artstyle = bleach.clean(request.data.get('artstyle'))
+        willdraw = bleach.clean(request.data.get('willdraw'))
+        wontdraw = bleach.clean(request.data.get('wontdraw'))
 
+        #Checks for invalid email
         try:
             validate_email(email)
         except:
             return Response({'email': 'Email is Invalid.', 'status': 'error'})
         print request.POST.get('username')
+
+        #checks if username or email have already been taken
         if User.objects.filter(username=username).exists():
             return Response({'username': 'Username is taken.', 'status': 'error'})
         elif User.objects.filter(email=email).exists():
@@ -172,9 +175,9 @@ class CommissionViewSet(viewsets.ModelViewSet):
         commtype = bleach.clean(request.data.get('commtype'))
         description = bleach.clean(request.data.get('description'))
         profile = Profile.objects.get(pk= (request.data.get('profile').get('id')))
-        price_min = request.data.get('price_min')
-        price_max = request.data.get('price_max')
-        slots = request.data.get('slots')
+        price_min = bleach.clean(request.data.get('price_min'))
+        price_max = bleach.clean(request.data.get('price_max'))
+        slots = bleach.clean(request.data.get('slots'))
 
         if(price_max < price_min):
             return Response({'price_max': 'Max must be greater than or equal to min', 'status': 'error'})

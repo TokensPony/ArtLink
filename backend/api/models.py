@@ -18,8 +18,13 @@ corresponding user data in the default user model and an implicit one to many re
 with the commission data created by the user.
 '''
 class Profile(models.Model):
+    COMMSTATUS_OPTIONS = (
+        ('Open', 'Open'),
+        ('Closed', 'Closed')
+    )
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = 'profile')
-    commstatus = models.CharField(max_length=1000, blank=False, default = '')
+    commstatus = models.CharField(max_length=1000, choices = COMMSTATUS_OPTIONS, blank=False, default = '')
     description = models.TextField(max_length=1000, blank=False, default = '')
     artstyle = models.CharField(max_length=1000, blank=False, default = '')
     willdraw = models.CharField(max_length=1000, blank=False, default = '')
