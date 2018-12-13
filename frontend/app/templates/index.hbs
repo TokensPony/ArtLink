@@ -2,6 +2,8 @@
 
 {{#if content}}
 <h4>Search</h4>
+<!--This is a nested series of instances of the filter-content plugin, which control
+the search functionality of the page-->
 {{#filter-content content=content properties="commstatus" as |filteredCS queryCS|}}
 	{{input value=queryCS placeholder="Comm Status"}}
 	{{#filter-content content=filteredCS properties="artstyle" as |filteredAS queryAS|}}
@@ -32,7 +34,7 @@
 				</div>
 			{{/masonry-item}}
 		{{/masonry-grid}}
-{{/filter-content}}		
+{{/filter-content}}
 {{/filter-content}}
 {{/filter-content}}
 {{else}}

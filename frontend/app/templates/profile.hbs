@@ -1,12 +1,14 @@
 <h2> Profile</h2>
 <div class="profileHeader">
   <img src="{{constants.rootURL}}{{model.img}}">
-  <b>{{model.user.username}}</b>   Name: {{model.user.first_name}}
+  <b>{{model.user.username}}</b>   Name: {{model.user.first_name}} {{model.user.last_name}}
 </div>
 <div class = "profileDetails">
 <b>Commission Status:</b> {{model.commstatus}}<br>
 <b>Art Style:</b> {{model.artstyle}}<br>
-<b>Description:</b> {{model.description}}<br><br>
+<b>Description:</b> {{model.description}}<br>
+<b>Will Draw:</b> {{model.willdraw}}<br>
+<b>Won't Draw:</b> {{model.wontdraw}}<br><br>
 </div>
 
 <!--This iterates through each piece of commission data and puts them into a table-->
