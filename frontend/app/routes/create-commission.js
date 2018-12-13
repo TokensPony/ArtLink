@@ -6,6 +6,7 @@ export default Ember.Route.extend({
   store: service(),
   auth: Ember.inject.service('auth-manager'),
 
+  //Prevents access from users not logged in
   beforeModel(transition){
     let blah = this;
     //setTimeout(1000);
@@ -15,6 +16,7 @@ export default Ember.Route.extend({
     }
   },
 
+  //Sets up the form for new Commissions defined in the controller
   setupController(controller, model) {
     this._super(controller, model);
     //this.controller.set('form.profile', '');
@@ -26,14 +28,11 @@ export default Ember.Route.extend({
   },
 
   actions:{
+    //Creates new commission data on backend and frontend, then goes to index
     create() {
       const form = this.controller.get('form');
       const store = this.get('store');
       var profileData = this.get('auth.profile');
-      //var profileData = this.store.find('profile', this.get('auth.userid'));
-      /*this.store.find('profile', 1).then(function(profile) {
-        newCommission.set('profile', profile);
-      });*/
       console.log(profileData.get('id'));
       const newCommission = store.createRecord('commission', {
         profile: this.get('auth.profile'),

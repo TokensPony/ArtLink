@@ -113,12 +113,20 @@ export default Ember.Service.extend({
 				auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 				auth.set('isLoggedIn', true);
 
-				if(auth.get('routing.currentRouteName') == "login"){
+				//Redirects users away from pages forbidden if already logged in
+				if(auth.get('routing.currentRouteName') == "login" ||
+					auth.get('routing.currentRouteName') == "createaccount"){
 					auth.get('routing').transitionTo('index');
 				}
+
+
 			} else{
 				//errors
 				console.log('The user is not currently logged in.');
+				//Redirects users away from pages forbidden if already logged in
+				if(auth.get('routing.currentRouteName') == "create-commission"){
+					auth.get('routing').transitionTo('login');
+				}
 			}
 		});
 	}

@@ -21,32 +21,15 @@ var defaultitems = Ember.A([
 ]);
 
 export default Ember.Route.extend({
-  /*getData(){
-    var items = Ember.A([]);
-    return Ember.$.get('/api/profiles/').then(function(events){
-      events.forEach(function(event){
-        // console.log(event);
-        var uName = event.user.username;
-        var picLink = 'img/no-image.jpg';
-        if(uName == "Typhlosion95"){
-          picLink = 'img/typhlosion95.jpg';
-        }
-        items.addObject({
-          id: event.id,
-          username: event.user.username,
-		      commstatus: event.commstatus,
-		      description: event.description,
-          user: event.user,
-          img: picLink,
-          link_external: '/api/profiles/' + event.user.id
-        });
-      });
-      return items.reverse()
-    }, function(msg){//error
-      console.log('Error loading events:');
-      console.log(msg.statusText);
-    });
-  },*/
+  //router: Ember.inject.service('-router'),
+
+  actions: {
+    willTransition(transition){
+      let blah = this;
+      console.log(transition.targetName);
+
+    }
+  },
 	model() {
     return this.store.findAll('profile');
     /*return this.store.findAll('profile').then(function(list){

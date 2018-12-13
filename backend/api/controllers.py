@@ -60,6 +60,10 @@ def xss_example(request):
               {}, RequestContext(request))
 
 
+'''
+Registers a new users to the site. Creates a new user and profile after peforming
+validation and sanitation on the fields. Invalid entries are rejected
+'''
 class Register(APIView):
     permission_classes = (AllowAny,)
     parser_classes = (parsers.JSONParser,)
@@ -99,9 +103,14 @@ class Register(APIView):
         #, 'profile': newprofile.id
         return Response({'status': 'success', 'userid': newuser.id, 'profile': newprofile.id})
 
+
+'''
+Sets and delivers session information including logging in, logging out, and checking
+if the user is currently logged in
+'''
 class Session(APIView):
     permission_classes = (AllowAny,)
-    #parser_classes = (parsers.JSONParser,)
+    #This method was added in order to serialize and attach profile data to the response object
     def form_response(self, isauthenticated, userid, username, error=""):
         serializer = ''
         profileData = ''
@@ -142,12 +151,13 @@ class Session(APIView):
         logout(request)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-
+#Profile View Set with all default configuration
 class ProfileViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
 
+#CommissionViewSet uses default methods except for create
 class CommissionViewSet(viewsets.ModelViewSet):
     permission_classes = (AllowAny,)
     #parser_classes = (parsers.JSONParser,)
@@ -165,6 +175,11 @@ class CommissionViewSet(viewsets.ModelViewSet):
         price_min = request.data.get('price_min')
         price_max = request.data.get('price_max')
         slots = request.data.get('slots')
+
+        if(price_max < price_min):
+            return Response({'price_max': 'Max must be greater than or equal to min', 'status': 'error'})
+
+
         newCommission = Commission(
             commtype=commtype,
             description = description,
@@ -174,8 +189,6 @@ class CommissionViewSet(viewsets.ModelViewSet):
             slots = slots
         )
 
-        if(price_max < price_min):
-            return Response({'price_max': 'Max must be greater than or equal to min', 'status': 'error'})
         try:
             newCommission.clean_fields()
         except ValidationError as e:
@@ -189,8 +202,3 @@ class CommissionViewSet(viewsets.ModelViewSet):
         newData = CommissionSerializer(newCommission)
         return Response(newData.data, status=status.HTTP_200_OK)
     #def create(self, request)
-        #Use custome post
-
-    #Enter edit
-    #Tighten
-    # Reject things on the API side

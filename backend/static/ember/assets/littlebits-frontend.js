@@ -1163,6 +1163,8 @@ define('littlebits-frontend/controllers/createaccount', ['exports'], function (e
     auth: Ember.inject.service('auth-manager'),
     showMenu: '',
     actions: {
+      /*Creates the account for a new user and passes default information for building
+      a corresponding profile with the user.*/
       createAccount: function createAccount() {
         var context = this;
         var data = {
@@ -1185,11 +1187,10 @@ define('littlebits-frontend/controllers/createaccount', ['exports'], function (e
             console.log('Attempting to turn ifttt on. Response from server is: ');
             console.log(response);
           }
+          //If successful, then it automatically logs in the user
         }).then(function (response) {
           //Authenticate
           console.log(response);
-          /*context.get('auth').set('username', );
-          context.get('auth').set('password', );*/
           context.set('auth.email', '');
           context.get('auth').login();
         });
@@ -2041,6 +2042,7 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
     store: Ember.inject.service(),
     auth: Ember.inject.service('auth-manager'),
 
+    //Prevents access from users not logged in
     beforeModel: function beforeModel(transition) {
       var blah = this;
       //setTimeout(1000);
@@ -2049,6 +2051,9 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
         blah.transitionTo('login');
       }
     },
+
+
+    //Sets up the form for new Commissions defined in the controller
     setupController: function setupController(controller, model) {
       this._super(controller, model);
       //this.controller.set('form.profile', '');
@@ -2061,14 +2066,11 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
 
 
     actions: {
+      //Creates new commission data on backend and frontend, then goes to index
       create: function create() {
         var form = this.controller.get('form');
         var store = this.get('store');
         var profileData = this.get('auth.profile');
-        //var profileData = this.store.find('profile', this.get('auth.userid'));
-        /*this.store.find('profile', 1).then(function(profile) {
-          newCommission.set('profile', profile);
-        });*/
         console.log(profileData.get('id'));
         var newCommission = store.createRecord('commission', {
           profile: this.get('auth.profile'),
@@ -2122,32 +2124,14 @@ define('littlebits-frontend/routes/index', ['exports'], function (exports) {
   }]);
 
   exports.default = Ember.Route.extend({
-    /*getData(){
-      var items = Ember.A([]);
-      return Ember.$.get('/api/profiles/').then(function(events){
-        events.forEach(function(event){
-          // console.log(event);
-          var uName = event.user.username;
-          var picLink = 'img/no-image.jpg';
-          if(uName == "Typhlosion95"){
-            picLink = 'img/typhlosion95.jpg';
-          }
-          items.addObject({
-            id: event.id,
-            username: event.user.username,
-          commstatus: event.commstatus,
-          description: event.description,
-            user: event.user,
-            img: picLink,
-            link_external: '/api/profiles/' + event.user.id
-          });
-        });
-        return items.reverse()
-      }, function(msg){//error
-        console.log('Error loading events:');
-        console.log(msg.statusText);
-      });
-    },*/
+    //router: Ember.inject.service('-router'),
+
+    actions: {
+      willTransition: function willTransition(transition) {
+        var blah = this;
+        console.log(transition.targetName);
+      }
+    },
     model: function model() {
       return this.store.findAll('profile');
       /*return this.store.findAll('profile').then(function(list){
@@ -2180,6 +2164,7 @@ define('littlebits-frontend/routes/login', ['exports'], function (exports) {
   });
   exports.default = Ember.Route.extend({
     auth: Ember.inject.service('auth-manager'),
+    //Prevents access from logged in users
     beforeModel: function beforeModel(transition) {
       var blah = this;
       console.log(blah.get('auth.isLoggedIn'));
@@ -2390,12 +2375,17 @@ define('littlebits-frontend/services/auth-manager', ['exports'], function (expor
 					auth.set('profile', auth.get('store').findRecord('profile', response.data.profile.id));
 					auth.set('isLoggedIn', true);
 
-					if (auth.get('routing.currentRouteName') == "login") {
+					//Redirects users away from pages forbidden if already logged in
+					if (auth.get('routing.currentRouteName') == "login" || auth.get('routing.currentRouteName') == "createaccount") {
 						auth.get('routing').transitionTo('index');
 					}
 				} else {
 					//errors
 					console.log('The user is not currently logged in.');
+					//Redirects users away from pages forbidden if already logged in
+					if (auth.get('routing.currentRouteName') == "create-commission") {
+						auth.get('routing').transitionTo('login');
+					}
 				}
 			});
 		}

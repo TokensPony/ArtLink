@@ -4,6 +4,8 @@ export default Ember.Controller.extend({
   auth: Ember.inject.service('auth-manager'),
   showMenu: '',
   actions: {
+    /*Creates the account for a new user and passes default information for building
+    a corresponding profile with the user.*/
     createAccount(){
       var context = this;
       var data = {
@@ -26,11 +28,10 @@ export default Ember.Controller.extend({
           console.log('Attempting to turn ifttt on. Response from server is: ');
           console.log(response);
         }
+      //If successful, then it automatically logs in the user
       }).then(function(response){
         //Authenticate
         console.log(response);
-        /*context.get('auth').set('username', );
-        context.get('auth').set('password', );*/
         context.set('auth.email', '');
         context.get('auth').login();
       });
