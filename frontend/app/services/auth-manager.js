@@ -49,6 +49,7 @@ export default Ember.Service.extend({
 				}
 				auth.set('password', '');
 
+				auth.init();
 
 				auth.get('routing').transitionTo('index');
 

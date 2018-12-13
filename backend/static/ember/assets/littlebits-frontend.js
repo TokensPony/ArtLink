@@ -2318,6 +2318,8 @@ define('littlebits-frontend/services/auth-manager', ['exports'], function (expor
 					}
 					auth.set('password', '');
 
+					auth.init();
+
 					auth.get('routing').transitionTo('index');
 
 					console.log('Login POST Request to /api/session/ was successful.');
