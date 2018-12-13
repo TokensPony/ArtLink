@@ -2071,7 +2071,7 @@ define('littlebits-frontend/routes/create-commission', ['exports'], function (ex
         var form = this.controller.get('form');
         var store = this.get('store');
         var profileData = this.get('auth.profile');
-        console.log(profileData.get('id'));
+        //console.log(profileData.get('id'));
         var newCommission = store.createRecord('commission', {
           profile: this.get('auth.profile'),
           commtype: form.commtype,
@@ -2706,6 +2706,6 @@ catch(err) {
 });
 
 if (!runningTests) {
-  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+c99fa32d"});
+  require("littlebits-frontend/app")["default"].create({"name":"littlebits-frontend","version":"0.0.0+5bc3cc4c"});
 }
 //# sourceMappingURL=littlebits-frontend.map

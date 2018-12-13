@@ -33,7 +33,7 @@ export default Ember.Route.extend({
       const form = this.controller.get('form');
       const store = this.get('store');
       var profileData = this.get('auth.profile');
-      console.log(profileData.get('id'));
+      //console.log(profileData.get('id'));
       const newCommission = store.createRecord('commission', {
         profile: this.get('auth.profile'),
         commtype: form.commtype,

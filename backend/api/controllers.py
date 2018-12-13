@@ -175,9 +175,9 @@ class CommissionViewSet(viewsets.ModelViewSet):
         commtype = bleach.clean(request.data.get('commtype'))
         description = bleach.clean(request.data.get('description'))
         profile = Profile.objects.get(pk= (request.data.get('profile').get('id')))
-        price_min = bleach.clean(request.data.get('price_min'))
-        price_max = bleach.clean(request.data.get('price_max'))
-        slots = bleach.clean(request.data.get('slots'))
+        price_min = request.data.get('price_min')
+        price_max = request.data.get('price_max')
+        slots = request.data.get('slots')
 
         if(price_max < price_min):
             return Response({'price_max': 'Max must be greater than or equal to min', 'status': 'error'})
