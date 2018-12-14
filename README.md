@@ -1,14 +1,13 @@
 # ArtLink
 A new app for making it easy for artists and potential commissioners to find each other.
 
-# Project Milestone 1
 Project Summary
 
 For my project entitled Art Link, I am creating an online system to help people who wish to commission artists to easily be able to search for different artists based on their specified needs. Artists who sign up can create an account that lists various details about their artistic capabilities, what they are willing or not willing to draw, what their commission prices are, whether they are currently accepting commissions, and links to any other online profiles where people can contact them or see examples of their work. Potential customers would be able to search for artists that fit their needs and see whether they are open to taking commissions. In the search results, artists that are taking commissions will be marked in green, while artists that are closed will be marked in red. Users can then click on artist in the search result and see example pieces of their art, full commission information, and their contact information. If a person particularly likes an artist, the user can subscribe to that artist to be notified by email when they are open to commissions again.
 	
 User Stories
 
-"As a person searching for artists to commission, I want to be able to search for artists that are currently open to commissions that draw the subject matter I want within my price range, so that I may more easily find the artist that suits my needs."
+"As a person searching for artists to commission, I want to be able to search for artists that are currently open to commissions that draw the subject matter I want within my price range, so that I may more easily find the artist that suits my needs and check out their other online presences. I would also like to be able to be notified about when artists become open for commission and request open slots from them“.
 
 Acceptance Criteria: Intuitive search interface, Ability to search and filter by multiple criteria
 
@@ -51,7 +50,7 @@ To run my app,
 docker-compose up
 ```
 NOTE
-Once the app is running on localhost. You will see the page, but no data. Currently the page shows an index of all users EXCEPT admins. To see the current state of the page's functionality in action. You must use the create account page linked on the left of the page to create an account. There are currently no validators, so anything will do. Once created, it will take you back to the homepage, where you should be able to see your basic profile info (if not, then try refreshing the page). You cannot create multiple accounts with matching usernames and/or email addresses however. To see full details about the models and data, login with your admin account and go to localhost/admin/
+When a superuser is created from the console, a corresponding profile is not automatically created. Be sure to lok into the admin console in the browser by going to localhost/admin/ and create a profile for the admin user. Once the app is running on localhost. You will see the page, but no data. Currently the page shows an index of all users EXCEPT admins. To see the current state of the page's functionality in action. You must use the create account page linked on the left of the page to create an account. There are currently no validators, so anything will do. Once created, it will take you back to the homepage, where you should be able to see your basic profile info (if not, then try refreshing the page). You cannot create multiple accounts with matching usernames and/or email addresses however. To see full details about the models and data, login with your admin account and go to localhost/admin/
 
 # License
 <a rel="license" href="http://creativecommons.org/licenses/by/2.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by/2.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by/2.0/">Creative Commons Attribution 2.0 Generic License</a>.
