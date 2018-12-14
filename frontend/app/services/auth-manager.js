@@ -49,6 +49,12 @@ export default Ember.Service.extend({
 				}
 				auth.set('password', '');
 
+				/*In order to fix a late discovered issue with commission info not posting properly
+				due to profile data not being loaded when clicking the link on the application
+				sidebar (as opposed to going to the page directly), I added the below line of code to
+				force init to be called whenever a login occurs. I know this is likely a not good idea,
+				but given my limited time, I had no choice but to go with it. Versions of this project
+				beyond this class will find a way to not do this as soon as humanly possibe*/
 				auth.init();
 
 				auth.get('routing').transitionTo('index');
